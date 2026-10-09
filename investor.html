@@ -1,0 +1,1903 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080b18">
+    <meta name="description" content="Discover ORIX Network — a community-powered digital ecosystem built for the next generation of blockchain innovation.">
+    <title>ORIX Network | Powering the Digital Frontier</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #080b18;
+            --bg-light: #0e1327;
+            --card: rgba(19, 27, 51, 0.75);
+            --primary: #38e8ff;
+            --secondary: #7765ff;
+            --text: #f4f7ff;
+            --muted: #9ba8c5;
+            --border: rgba(140, 166, 255, 0.14);
+            --gradient: linear-gradient(110deg, #38e8ff, #7765ff);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font: inherit;
+        }
+
+        .container {
+            width: min(1160px, 90%);
+            margin: auto;
+        }
+
+        .gradient-text {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+
+        .section-label::before {
+            content: "";
+            width: 24px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .section-heading {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(32px, 4vw, 48px);
+            line-height: 1.15;
+            letter-spacing: -1.5px;
+            margin-bottom: 18px;
+        }
+
+        .section-description {
+            color: var(--muted);
+            max-width: 620px;
+            margin: auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .section-header .section-label {
+            justify-content: center;
+        }
+
+        /* Navigation */
+
+        .navbar {
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 0;
+            background: rgba(8, 11, 24, 0.82);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid transparent;
+            transition: 0.3s;
+        }
+
+        .navbar.scrolled {
+            border-color: var(--border);
+            padding: 14px 0;
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+            font-size: 23px;
+            letter-spacing: 1px;
+        }
+
+        .logo-symbol {
+            width: 39px;
+            height: 39px;
+            border: 2px solid var(--primary);
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            color: var(--primary);
+            font-size: 23px;
+            transform: rotate(-8deg);
+            box-shadow: 0 0 20px rgba(56, 232, 255, 0.12);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            font-size: 13px;
+            transition: color 0.25s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .btn {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 9px;
+            padding: 13px 23px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 700;
+            border: 1px solid transparent;
+            cursor: pointer;
+            transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-primary {
+            color: #07101b;
+            background: var(--gradient);
+            box-shadow: 0 5px 24px rgba(56, 232, 255, 0.12);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 30px rgba(56, 232, 255, 0.25);
+        }
+
+        .btn-outline {
+            border-color: var(--border);
+            background: rgba(255, 255, 255, 0.025);
+            color: var(--text);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+        }
+
+        .menu-toggle {
+            display: none;
+            color: white;
+            background: none;
+            border: 0;
+            font-size: 26px;
+            cursor: pointer;
+        }
+
+        /* Hero */
+
+        .hero {
+            min-height: 760px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding: 150px 0 90px;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "";
+            position: absolute;
+            width: 700px;
+            height: 700px;
+            border-radius: 50%;
+            top: -150px;
+            right: -100px;
+            background: radial-gradient(circle, rgba(63, 85, 255, 0.16), transparent 68%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: "";
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            left: -250px;
+            bottom: -300px;
+            background: radial-gradient(circle, rgba(56, 232, 255, 0.12), transparent 70%);
+            pointer-events: none;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            align-items: center;
+            gap: 35px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.035);
+            padding: 9px 15px;
+            border-radius: 30px;
+            color: #c9d4f0;
+            font-size: 11px;
+            margin-bottom: 30px;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            background: #44f3ba;
+            border-radius: 50%;
+            box-shadow: 0 0 12px #44f3ba;
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(46px, 5.4vw, 73px);
+            line-height: 1.04;
+            letter-spacing: -3px;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 .line {
+            display: block;
+        }
+
+        .hero-description {
+            color: var(--muted);
+            max-width: 490px;
+            font-size: 15px;
+            line-height: 1.9;
+            margin-bottom: 32px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        .hero-note {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-top: 40px;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .avatar-stack {
+            display: flex;
+            padding-left: 5px;
+        }
+
+        .avatar {
+            width: 29px;
+            height: 29px;
+            border: 2px solid var(--bg);
+            margin-left: -6px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #38e8ff, #7765ff);
+        }
+
+        .avatar:nth-child(2) {
+            background: linear-gradient(135deg, #ff9cda, #7765ff);
+        }
+
+        .avatar:nth-child(3) {
+            background: linear-gradient(135deg, #b6ffcf, #38a4ff);
+        }
+
+        .avatar:nth-child(4) {
+            background: linear-gradient(135deg, #ffcd8c, #ff658b);
+        }
+
+        /* Hero Orb */
+
+        .hero-visual {
+            min-height: 460px;
+            position: relative;
+            display: grid;
+            place-items: center;
+        }
+
+        .orbital-scene {
+            width: min(100%, 470px);
+            aspect-ratio: 1;
+            position: relative;
+            display: grid;
+            place-items: center;
+        }
+
+        .orbital-glow {
+            position: absolute;
+            width: 75%;
+            height: 75%;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(64, 94, 255, 0.2), transparent 70%);
+            filter: blur(25px);
+        }
+
+        .orbit {
+            position: absolute;
+            width: 87%;
+            height: 36%;
+            border: 1px solid rgba(56, 232, 255, 0.55);
+            border-radius: 50%;
+            transform: rotate(-35deg);
+            box-shadow: 0 0 16px rgba(56, 232, 255, 0.06);
+        }
+
+        .orbit.two {
+            width: 95%;
+            height: 49%;
+            transform: rotate(48deg);
+            border-color: rgba(119, 101, 255, 0.6);
+        }
+
+        .orbit.three {
+            width: 70%;
+            height: 95%;
+            transform: rotate(60deg);
+            border-color: rgba(56, 232, 255, 0.22);
+        }
+
+        .orbit-dot {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--primary);
+            border-radius: 50%;
+            box-shadow: 0 0 18px var(--primary);
+        }
+
+        .orbit-dot.one {
+            top: 23%;
+            left: 19%;
+        }
+
+        .orbit-dot.two {
+            bottom: 20%;
+            right: 17%;
+            background: #9588ff;
+            box-shadow: 0 0 18px #9588ff;
+        }
+
+        .orbit-dot.three {
+            right: 14%;
+            top: 29%;
+            width: 6px;
+            height: 6px;
+        }
+
+        .core {
+            width: 185px;
+            height: 185px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            position: relative;
+            background: radial-gradient(circle at 32% 25%, #314c88, #121b3b 55%, #080b18);
+            border: 1px solid rgba(56, 232, 255, 0.8);
+            box-shadow:
+                0 0 35px rgba(56, 232, 255, 0.17),
+                inset 0 0 35px rgba(119, 101, 255, 0.3);
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .core::before {
+            content: "";
+            position: absolute;
+            inset: -12px;
+            border: 1px solid rgba(119, 101, 255, 0.3);
+            border-radius: 50%;
+        }
+
+        .core::after {
+            content: "";
+            position: absolute;
+            inset: 13px;
+            border: 1px solid rgba(56, 232, 255, 0.15);
+            border-radius: 50%;
+        }
+
+        .core-mark {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 92px;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 30px rgba(56, 232, 255, 0.6);
+            transform: skew(-8deg);
+        }
+
+        .floating-card {
+            position: absolute;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 17px;
+            background: rgba(14, 20, 41, 0.92);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .floating-card.top {
+            top: 14%;
+            right: -2%;
+        }
+
+        .floating-card.bottom {
+            bottom: 14%;
+            left: -2%;
+            animation-delay: -2s;
+        }
+
+        .float-icon {
+            width: 37px;
+            height: 37px;
+            display: grid;
+            place-items: center;
+            border-radius: 10px;
+            background: rgba(56, 232, 255, 0.1);
+            color: var(--primary);
+            font-size: 19px;
+        }
+
+        .floating-card small {
+            display: block;
+            font-size: 10px;
+            color: var(--muted);
+        }
+
+        .floating-card strong {
+            font-size: 12px;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        /* Trust strip */
+
+        .trust-strip {
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.012);
+            padding: 28px 0;
+        }
+
+        .trust-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            text-align: center;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            color: #c5cee5;
+            font-size: 12px;
+        }
+
+        .trust-icon {
+            font-size: 22px;
+            color: var(--primary);
+        }
+
+        /* Ecosystem */
+
+        section {
+            padding: 110px 0;
+        }
+
+        .ecosystem {
+            background: linear-gradient(180deg, transparent, rgba(15, 21, 43, 0.5), transparent);
+        }
+
+        .ecosystem-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .feature-card {
+            padding: 30px;
+            min-height: 265px;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            background: var(--card);
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .feature-card::after {
+            content: "";
+            position: absolute;
+            width: 160px;
+            height: 160px;
+            right: -90px;
+            bottom: -90px;
+            border-radius: 50%;
+            background: rgba(56, 232, 255, 0.07);
+            transition: 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-7px);
+            border-color: rgba(56, 232, 255, 0.45);
+            background: rgba(22, 31, 59, 0.9);
+        }
+
+        .feature-card:hover::after {
+            transform: scale(1.5);
+        }
+
+        .feature-icon {
+            width: 54px;
+            height: 54px;
+            display: grid;
+            place-items: center;
+            background: rgba(56, 232, 255, 0.09);
+            border: 1px solid rgba(56, 232, 255, 0.15);
+            border-radius: 14px;
+            color: var(--primary);
+            font-size: 24px;
+            margin-bottom: 25px;
+        }
+
+        .feature-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        .feature-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 20px;
+            font-size: 12px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        /* About */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 75px;
+            align-items: center;
+        }
+
+        .about-copy .section-heading {
+            max-width: 500px;
+        }
+
+        .about-copy > p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+
+        .about-points {
+            display: grid;
+            gap: 17px;
+            margin: 28px 0 32px;
+        }
+
+        .about-point {
+            display: flex;
+            gap: 13px;
+            align-items: flex-start;
+        }
+
+        .check {
+            flex-shrink: 0;
+            width: 24px;
+            height: 24px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            color: var(--primary);
+            background: rgba(56, 232, 255, 0.1);
+            font-size: 12px;
+        }
+
+        .about-point strong {
+            display: block;
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .about-point span {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .about-visual {
+            position: relative;
+            min-height: 420px;
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            background:
+                radial-gradient(ellipse at 50% 45%, rgba(72, 81, 203, 0.2), transparent 65%),
+                linear-gradient(145deg, #101831, #0b1021);
+            overflow: hidden;
+            display: grid;
+            place-items: center;
+        }
+
+        .network-lines {
+            position: absolute;
+            inset: 0;
+            opacity: 0.45;
+            background-image:
+                linear-gradient(rgba(56, 232, 255, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(56, 232, 255, 0.08) 1px, transparent 1px);
+            background-size: 35px 35px;
+            mask-image: radial-gradient(ellipse, black, transparent 75%);
+        }
+
+        .network-center {
+            position: relative;
+            z-index: 1;
+            width: 125px;
+            height: 125px;
+            display: grid;
+            place-items: center;
+            border-radius: 30px;
+            background: linear-gradient(145deg, #1d3c6d, #171239);
+            border: 1px solid rgba(56, 232, 255, 0.65);
+            box-shadow: 0 0 55px rgba(56, 232, 255, 0.14);
+            font-size: 65px;
+            font-weight: 700;
+            color: var(--primary);
+            transform: rotate(-8deg);
+        }
+
+        .network-node {
+            position: absolute;
+            z-index: 2;
+            width: 62px;
+            height: 62px;
+            border-radius: 17px;
+            background: #121c38;
+            border: 1px solid rgba(119, 101, 255, 0.65);
+            display: grid;
+            place-items: center;
+            color: #aaa1ff;
+            font-size: 23px;
+            box-shadow: 0 0 30px rgba(119, 101, 255, 0.1);
+        }
+
+        .node-one { top: 17%; left: 18%; }
+        .node-two { top: 17%; right: 18%; }
+        .node-three { bottom: 16%; left: 18%; }
+        .node-four { bottom: 16%; right: 18%; }
+
+        /* Tokenomics */
+
+        .tokenomics {
+            background: rgba(14, 19, 39, 0.6);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .token-panel {
+            max-width: 900px;
+            margin: auto;
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            background: rgba(17, 24, 47, 0.8);
+            overflow: hidden;
+        }
+
+        .token-panel-top {
+            padding: 35px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .token-identity {
+            display: flex;
+            align-items: center;
+            gap: 17px;
+        }
+
+        .token-logo {
+            width: 62px;
+            height: 62px;
+            display: grid;
+            place-items: center;
+            background: linear-gradient(135deg, rgba(56, 232, 255, 0.15), rgba(119, 101, 255, 0.2));
+            border: 1px solid rgba(56, 232, 255, 0.35);
+            border-radius: 18px;
+            font-size: 30px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .token-identity h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 23px;
+        }
+
+        .token-identity p {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .token-tag {
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .token-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .token-item {
+            padding: 30px 35px;
+            border-right: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .token-item:nth-child(3n) {
+            border-right: 0;
+        }
+
+        .token-item:nth-last-child(-n+3) {
+            border-bottom: 0;
+        }
+
+        .token-item span {
+            display: block;
+            font-size: 11px;
+            color: var(--muted);
+            margin-bottom: 9px;
+        }
+
+        .token-item strong {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 17px;
+        }
+
+        .token-disclaimer {
+            max-width: 800px;
+            margin: 25px auto 0;
+            color: #7885a5;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        /* Roadmap */
+
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            position: relative;
+        }
+
+        .roadmap-card {
+            padding: 25px 22px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .roadmap-number {
+            font-family: 'Space Grotesk', sans-serif;
+            color: rgba(56, 232, 255, 0.25);
+            font-size: 35px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .roadmap-card h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .roadmap-card p {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.9;
+        }
+
+        .roadmap-status {
+            display: inline-block;
+            margin-top: 22px;
+            padding: 6px 9px;
+            border-radius: 5px;
+            font-size: 9px;
+            letter-spacing: 1px;
+            font-weight: 700;
+            background: rgba(119, 101, 255, 0.12);
+            color: #a9a0ff;
+        }
+
+        /* Community */
+
+        .community {
+            padding-top: 30px;
+        }
+
+        .community-box {
+            position: relative;
+            text-align: center;
+            padding: 75px 30px;
+            border-radius: 25px;
+            border: 1px solid rgba(56, 232, 255, 0.2);
+            background:
+                radial-gradient(ellipse at 50% 120%, rgba(119, 101, 255, 0.2), transparent 60%),
+                radial-gradient(ellipse at 0% 0%, rgba(56, 232, 255, 0.08), transparent 50%),
+                #0e1429;
+            overflow: hidden;
+        }
+
+        .community-box h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(32px, 5vw, 51px);
+            letter-spacing: -1.5px;
+            line-height: 1.2;
+            margin-bottom: 18px;
+        }
+
+        .community-box p {
+            max-width: 570px;
+            margin: 0 auto 30px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .community-buttons {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 14px;
+        }
+
+        /* Footer */
+
+        footer {
+            padding: 60px 0 25px;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 50px;
+            padding-bottom: 45px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .footer-brand {
+            max-width: 310px;
+        }
+
+        .footer-brand p {
+            margin-top: 17px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.9;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 55px;
+        }
+
+        .footer-column h4 {
+            font-size: 12px;
+            margin-bottom: 17px;
+        }
+
+        .footer-column a {
+            display: block;
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 12px;
+            transition: color 0.2s;
+        }
+
+        .footer-column a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            padding-top: 23px;
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            color: #7885a5;
+            font-size: 11px;
+        }
+
+        .footer-bottom a {
+            color: #9ba8c5;
+        }
+
+        /* Reveal animations */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+
+        @media (max-width: 950px) {
+            .nav-links {
+                gap: 18px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr 0.85fr;
+                gap: 10px;
+            }
+
+            .hero h1 {
+                font-size: 54px;
+            }
+
+            .floating-card.top {
+                right: 0;
+            }
+
+            .floating-card.bottom {
+                left: 0;
+            }
+
+            .about-grid {
+                gap: 35px;
+            }
+
+            .roadmap-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 760px) {
+            .navbar {
+                padding: 15px 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                padding: 20px 5% 25px;
+                display: none;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                background: rgba(8, 11, 24, 0.98);
+                border-bottom: 1px solid var(--border);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li a {
+                display: block;
+                padding: 13px 0;
+                font-size: 14px;
+            }
+
+            .nav-links .nav-cta {
+                margin-top: 10px;
+                text-align: center;
+            }
+
+            .hero {
+                padding-top: 130px;
+                min-height: auto;
+            }
+
+            .hero-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-content {
+                text-align: center;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-buttons,
+            .hero-note {
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: clamp(45px, 10vw, 65px);
+                letter-spacing: -2px;
+            }
+
+            .hero-visual {
+                min-height: 390px;
+                margin-top: 15px;
+            }
+
+            .orbital-scene {
+                max-width: 390px;
+            }
+
+            .core {
+                width: 150px;
+                height: 150px;
+            }
+
+            .core-mark {
+                font-size: 75px;
+            }
+
+            .floating-card.top {
+                right: 0;
+                top: 10%;
+            }
+
+            .floating-card.bottom {
+                left: 0;
+                bottom: 8%;
+            }
+
+            .trust-grid {
+                grid-template-columns: 1fr;
+                gap: 22px;
+            }
+
+            section {
+                padding: 80px 0;
+            }
+
+            .ecosystem-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card {
+                min-height: auto;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 35px;
+            }
+
+            .about-visual {
+                min-height: 350px;
+                order: -1;
+            }
+
+            .token-panel-top {
+                padding: 25px;
+                flex-wrap: wrap;
+            }
+
+            .token-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .token-item {
+                padding: 24px;
+                border-right: 1px solid var(--border) !important;
+                border-bottom: 1px solid var(--border) !important;
+            }
+
+            .token-item:nth-child(2n) {
+                border-right: 0 !important;
+            }
+
+            .token-item:nth-last-child(-n+2) {
+                border-bottom: 0 !important;
+            }
+
+            .roadmap-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .community-box {
+                padding: 55px 22px;
+            }
+
+            .footer-top {
+                flex-direction: column;
+                gap: 35px;
+            }
+
+            .footer-links {
+                gap: 30px;
+                justify-content: space-between;
+                width: 100%;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .logo {
+                font-size: 19px;
+            }
+
+            .logo-symbol {
+                width: 34px;
+                height: 34px;
+            }
+
+            .hero-buttons .btn {
+                width: 100%;
+            }
+
+            .floating-card {
+                padding: 10px;
+            }
+
+            .floating-card strong {
+                font-size: 10px;
+            }
+
+            .token-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .token-item {
+                border-right: 0 !important;
+                border-bottom: 1px solid var(--border) !important;
+            }
+
+            .token-item:last-child {
+                border-bottom: 0 !important;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar" id="navbar">
+        <div class="container nav-inner">
+
+            <a href="#home" class="logo" aria-label="ORIX Network Home">
+                <span class="logo-symbol">O</span>
+                <span>ORIX<span class="gradient-text"> NETWORK</span></span>
+            </a>
+
+            <button class="menu-toggle" id="menuToggle"
+                    aria-label="Open navigation menu"
+                    aria-expanded="false"
+                    aria-controls="navLinks">
+                ☰
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#ecosystem">Ecosystem</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#tokenomics">Tokenomics</a></li>
+                <li><a href="#roadmap">Roadmap</a></li>
+                <li>
+                    <a href="#community" class="btn btn-primary nav-cta">
+                        Join ORIX ↗
+                    </a>
+                </li>
+            </ul>
+
+        </div>
+    </header>
+
+    <main>
+
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="container hero-grid">
+
+                <div class="hero-content">
+
+                    <div class="status-badge">
+                        <span class="status-dot"></span>
+                        A NEW DIGITAL FRONTIER
+                    </div>
+
+                    <h1>
+                        <span class="line">POWERING THE</span>
+                        <span class="line">NEXT <span class="gradient-text">DIGITAL</span></span>
+                        <span class="line gradient-text">FRONTIER.</span>
+                    </h1>
+
+                    <p class="hero-description">
+                        Welcome to ORIX Network — a community-powered digital
+                        ecosystem designed to connect people, digital assets,
+                        and opportunities in a more accessible digital economy.
+                    </p>
+
+                    <div class="hero-buttons">
+                        <a href="#ecosystem" class="btn btn-primary">
+                            Explore ORIX <span>→</span>
+                        </a>
+
+                        <a href="#about" class="btn btn-outline">
+                            Discover Our Vision ↗
+                        </a>
+                    </div>
+
+                    <div class="hero-note">
+                        <div class="avatar-stack" aria-hidden="true">
+                            <span class="avatar"></span>
+                            <span class="avatar"></span>
+                            <span class="avatar"></span>
+                            <span class="avatar"></span>
+                        </div>
+
+                        <span>Built around community. Designed for possibility.</span>
+                    </div>
+
+                </div>
+
+                <div class="hero-visual" aria-label="ORIX digital network illustration">
+
+                    <div class="orbital-scene">
+
+                        <div class="orbital-glow"></div>
+
+                        <div class="orbit"></div>
+                        <div class="orbit two"></div>
+                        <div class="orbit three"></div>
+
+                        <span class="orbit-dot one"></span>
+                        <span class="orbit-dot two"></span>
+                        <span class="orbit-dot three"></span>
+
+                        <div class="core">
+                            <span class="core-mark">O</span>
+                        </div>
+
+                        <div class="floating-card top">
+                            <div class="float-icon">◇</div>
+                            <div>
+                                <small>THE ECOSYSTEM</small>
+                                <strong>Connected by ORIX</strong>
+                            </div>
+                        </div>
+
+                        <div class="floating-card bottom">
+                            <div class="float-icon">⌘</div>
+                            <div>
+                                <small>THE VISION</small>
+                                <strong>One Network. More Possibilities.</strong>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Core Principles -->
+        <div class="trust-strip">
+            <div class="container trust-grid">
+
+                <div class="trust-item">
+                    <span class="trust-icon">◈</span>
+                    <span>COMMUNITY-POWERED INNOVATION</span>
+                </div>
+
+                <div class="trust-item">
+                    <span class="trust-icon">⌘</span>
+                    <span>CONNECTED DIGITAL EXPERIENCES</span>
+                </div>
+
+                <div class="trust-item">
+                    <span class="trust-icon">✧</span>
+                    <span>BUILT FOR THE FUTURE</span>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Ecosystem -->
+        <section class="ecosystem" id="ecosystem">
+            <div class="container">
+
+                <div class="section-header reveal">
+                    <span class="section-label">THE ECOSYSTEM</span>
+
+                    <h2 class="section-heading">
+                        More Than a Token.<br>
+                        <span class="gradient-text">A Connected Experience.</span>
+                    </h2>
+
+                    <p class="section-description">
+                        ORIX brings together digital participation, wallet
+                        experiences, and community-driven growth under one vision.
+                    </p>
+                </div>
+
+                <div class="ecosystem-grid">
+
+                    <article class="feature-card reveal">
+                        <div class="feature-icon">◈</div>
+
+                        <h3>Mining & Rewards</h3>
+
+                        <p>
+                            Explore participation-based reward experiences
+                            designed to encourage engagement and long-term
+                            involvement in the ORIX community.
+                        </p>
+
+                        <a href="#community" class="feature-link">
+                            Explore possibilities <span>→</span>
+                        </a>
+                    </article>
+
+                    <article class="feature-card reveal">
+                        <div class="feature-icon">▣</div>
+
+                        <h3>Digital Wallet</h3>
+
+                        <p>
+                            A vision for a convenient digital asset experience
+                            where users can access their ORIX account and manage
+                            supported assets through a connected platform.
+                        </p>
+
+                        <a href="#about" class="feature-link">
+                            Discover the vision <span>→</span>
+                        </a>
+                    </article>
+
+                    <article class="feature-card reveal">
+                        <div class="feature-icon">⌘</div>
+
+                        <h3>Community Network</h3>
+
+                        <p>
+                            Connect with other participants, share ideas,
+                            explore new opportunities, and help shape the
+                            future direction of the ORIX ecosystem.
+                        </p>
+
+                        <a href="#community" class="feature-link">
+                            Meet the community <span>→</span>
+                        </a>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- About ORIX -->
+        <section id="about">
+            <div class="container about-grid">
+
+                <div class="about-copy reveal">
+
+                    <span class="section-label">WHY ORIX</span>
+
+                    <h2 class="section-heading">
+                        The Future Is<br>
+                        <span class="gradient-text">Built Together.</span>
+                    </h2>
+
+                    <p>
+                        We believe the next generation of digital networks
+                        should be accessible, useful, and shaped by the people
+                        who participate in them.
+                    </p>
+
+                    <p>
+                        ORIX Network aims to bring that belief to life through
+                        an evolving ecosystem focused on digital participation,
+                        practical tools, and community growth.
+                    </p>
+
+                    <div class="about-points">
+
+                        <div class="about-point">
+                            <span class="check">✓</span>
+                            <div>
+                                <strong>Accessibility First</strong>
+                                <span>Building digital experiences with everyday users in mind.</span>
+                            </div>
+                        </div>
+
+                        <div class="about-point">
+                            <span class="check">✓</span>
+                            <div>
+                                <strong>Community at the Core</strong>
+                                <span>Creating room for participation, feedback, and shared progress.</span>
+                            </div>
+                        </div>
+
+                        <div class="about-point">
+                            <span class="check">✓</span>
+                            <div>
+                                <strong>Growth Through Innovation</strong>
+                                <span>Exploring practical applications for a connected digital ecosystem.</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <a href="#roadmap" class="btn btn-primary">
+                        Explore Our Roadmap →
+                    </a>
+
+                </div>
+
+                <div class="about-visual reveal">
+
+                    <div class="network-lines"></div>
+
+                    <div class="network-node node-one">◇</div>
+                    <div class="network-node node-two">⌘</div>
+                    <div class="network-node node-three">▣</div>
+                    <div class="network-node node-four">✧</div>
+
+                    <div class="network-center">O</div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Tokenomics -->
+        <section class="tokenomics" id="tokenomics">
+            <div class="container">
+
+                <div class="section-header reveal">
+                    <span class="section-label">THE ORIX TOKEN</span>
+
+                    <h2 class="section-heading">
+                        Understanding <span class="gradient-text">ORIX.</span>
+                    </h2>
+
+                    <p class="section-description">
+                        A look at the intended role of the ORIX token within
+                        its evolving digital ecosystem.
+                    </p>
+                </div>
+
+                <div class="token-panel reveal">
+
+                    <div class="token-panel-top">
+
+                        <div class="token-identity">
+                            <div class="token-logo">O</div>
+
+                            <div>
+                                <h3>ORIX Token</h3>
+                                <p>ORIX Network Digital Asset</p>
+                            </div>
+                        </div>
+
+                        <span class="token-tag">TOKEN OVERVIEW</span>
+
+                    </div>
+
+                    <div class="token-grid">
+
+                        <div class="token-item">
+                            <span>Token Name</span>
+                            <strong>ORIX</strong>
+                        </div>
+
+                        <div class="token-item">
+                            <span>Token Symbol</span>
+                            <strong>ORIX</strong>
+                        </div>
+
+                        <div class="token-item">
+                            <span>Token Standard</span>
+                            <strong>To Be Confirmed</strong>
+                        </div>
+
+                        <div class="token-item">
+                            <span>Total Supply</span>
+                            <strong>To Be Announced</strong>
+                        </div>
+
+                        <div class="token-item">
+                            <span>Blockchain Network</span>
+                            <strong>To Be Confirmed</strong>
+                        </div>
+
+                        <div class="token-item">
+                            <span>Token Utility</span>
+                            <strong>Ecosystem Participation</strong>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <p class="token-disclaimer">
+                    Token specifications are placeholders pending official
+                    confirmation. This website does not represent an official
+                    token launch announcement, price quotation, or investment offer.
+                </p>
+
+            </div>
+        </section>
+
+        <!-- Roadmap -->
+        <section id="roadmap">
+            <div class="container">
+
+                <div class="section-header reveal">
+                    <span class="section-label">THE ROADMAP</span>
+
+                    <h2 class="section-heading">
+                        Building the <span class="gradient-text">ORIX Future.</span>
+                    </h2>
+
+                    <p class="section-description">
+                        A proposed development framework for the ORIX Network
+                        ecosystem. Milestones and dates will be confirmed officially.
+                    </p>
+                </div>
+
+                <div class="roadmap-grid">
+
+                    <article class="roadmap-card reveal">
+                        <div class="roadmap-number">01</div>
+
+                        <h3>Foundation</h3>
+
+                        <p>
+                            Establish the network identity, define tokenomics,
+                            document the technical architecture, and prepare
+                            the core project infrastructure.
+                        </p>
+
+                        <span class="roadmap-status">FOUNDATION PHASE</span>
+                    </article>
+
+                    <article class="roadmap-card reveal">
+                        <div class="roadmap-number">02</div>
+
+                        <h3>Ecosystem Development</h3>
+
+                        <p>
+                            Develop and refine essential user experiences,
+                            including account management, wallet functionality,
+                            and community participation features.
+                        </p>
+
+                        <span class="roadmap-status">PLANNED</span>
+                    </article>
+
+                    <article class="roadmap-card reveal">
+                        <div class="roadmap-number">03</div>
+
+                        <h3>Token & Integration</h3>
+
+                        <p>
+                            Finalize token specifications, assess deployment
+                            requirements, and conduct appropriate security
+                            reviews before any public release.
+                        </p>
+
+                        <span class="roadmap-status">PLANNED</span>
+                    </article>
+
+                    <article class="roadmap-card reveal">
+                        <div class="roadmap-number">04</div>
+
+                        <h3>Expansion</h3>
+
+                        <p>
+                            Explore ecosystem partnerships, broaden community
+                            participation, and introduce additional utilities
+                            as the project matures.
+                        </p>
+
+                        <span class="roadmap-status">FUTURE VISION</span>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Community -->
+        <section class="community" id="community">
+            <div class="container">
+
+                <div class="community-box reveal">
+
+                    <span class="section-label">JOIN THE MOVEMENT</span>
+
+                    <h2>
+                        The Next Chapter<br>
+                        <span class="gradient-text">Starts With You.</span>
+                    </h2>
+
+                    <p>
+                        Be part of the ORIX Network journey. Follow the project's
+                        progress, discover upcoming developments, and help build
+                        a stronger digital community.
+                    </p>
+
+                    <div class="community-buttons">
+                        <!-- Replace # with your official community URLs -->
+                        <a href="#" class="btn btn-primary community-link">
+                            Join Our Community ↗
+                        </a>
+
+                        <a href="#" class="btn btn-outline community-link">
+                            Follow ORIX Updates ↗
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+
+            <div class="footer-top">
+
+                <div class="footer-brand">
+
+                    <a href="#home" class="logo">
+                        <span class="logo-symbol">O</span>
+                        <span>ORIX<span class="gradient-text"> NETWORK</span></span>
+                    </a>
+
+                    <p>
+                        One network. Limitless possibilities.
+                        Exploring a more connected digital future through
+                        innovation, accessibility, and community.
+                    </p>
+
+                </div>
+
+                <div class="footer-links">
+
+                    <div class="footer-column">
+                        <h4>Explore</h4>
+                        <a href="#home">Home</a>
+                        <a href="#ecosystem">Ecosystem</a>
+                        <a href="#about">About ORIX</a>
+                        <a href="#roadmap">Roadmap</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Token</h4>
+                        <a href="#tokenomics">Token Overview</a>
+                        <a href="#tokenomics">Tokenomics</a>
+                        <a href="#community">Token Updates</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Community</h4>
+                        <a href="#" class="community-link">Telegram</a>
+                        <a href="#" class="community-link">X / Twitter</a>
+                        <a href="#" class="community-link">Contact</a>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+
+                <span>
+                    © <span id="year"></span> ORIX Network. All rights reserved.
+                </span>
+
+                <span>
+                    Digital assets involve risk. Nothing on this website
+                    constitutes financial advice.
+                </span>
+
+            </div>
+
+        </div>
+    </footer>
+
+    <script>
+        // Mobile navigation
+        const menuToggle = document.getElementById("menuToggle");
+        const navLinks = document.getElementById("navLinks");
+
+        menuToggle.addEventListener("click", () => {
+            const isOpen = navLinks.classList.toggle("active");
+
+            menuToggle.setAttribute("aria-expanded", String(isOpen));
+            menuToggle.setAttribute(
+                "aria-label",
+                isOpen ? "Close navigation menu" : "Open navigation menu"
+            );
+
+            menuToggle.textContent = isOpen ? "✕" : "☰";
+        });
+
+        // Close mobile menu after selecting a section
+        document.querySelectorAll("#navLinks a").forEach(link => {
+            link.addEventListener("click", () => {
+                navLinks.classList.remove("active");
+                menuToggle.setAttribute("aria-expanded", "false");
+                menuToggle.setAttribute("aria-label", "Open navigation menu");
+                menuToggle.textContent = "☰";
+            });
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById("navbar");
+
+        function updateNavbar() {
+            navbar.classList.toggle("scrolled", window.scrollY > 30);
+        }
+
+        window.addEventListener("scroll", updateNavbar, { passive: true });
+        updateNavbar();
+
+        // Reveal elements as they enter the viewport
+        const revealElements = document.querySelectorAll(".reveal");
+
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.12
+            });
+
+            revealElements.forEach(element => observer.observe(element));
+        } else {
+            revealElements.forEach(element => element.classList.add("visible"));
+        }
+
+        // Automatically update copyright year
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        // Prevent unconfigured placeholder links from navigating to the top.
+        // Replace these links with your official URLs before publishing.
+        document.querySelectorAll(".community-link").forEach(link => {
+            link.addEventListener("click", event => {
+                if (link.getAttribute("href") === "#") {
+                    event.preventDefault();
+                    alert("The official ORIX Network community link will be added soon.");
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
+```
