@@ -1,1903 +1,1985 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#080b18">
-    <meta name="description" content="Discover ORIX Network — a community-powered digital ecosystem built for the next generation of blockchain innovation.">
-    <title>ORIX Network | Powering the Digital Frontier</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        :root {
-            --bg: #080b18;
-            --bg-light: #0e1327;
-            --card: rgba(19, 27, 51, 0.75);
-            --primary: #38e8ff;
-            --secondary: #7765ff;
-            --text: #f4f7ff;
-            --muted: #9ba8c5;
-            --border: rgba(140, 166, 255, 0.14);
-            --gradient: linear-gradient(110deg, #38e8ff, #7765ff);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            scroll-padding-top: 90px;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        button {
-            font: inherit;
-        }
-
-        .container {
-            width: min(1160px, 90%);
-            margin: auto;
-        }
-
-        .gradient-text {
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .section-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            color: var(--primary);
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 18px;
-        }
-
-        .section-label::before {
-            content: "";
-            width: 24px;
-            height: 2px;
-            background: var(--primary);
-        }
-
-        .section-heading {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(32px, 4vw, 48px);
-            line-height: 1.15;
-            letter-spacing: -1.5px;
-            margin-bottom: 18px;
-        }
-
-        .section-description {
-            color: var(--muted);
-            max-width: 620px;
-            margin: auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 55px;
-        }
-
-        .section-header .section-label {
-            justify-content: center;
-        }
-
-        /* Navigation */
-
-        .navbar {
-            position: fixed;
-            z-index: 1000;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px 0;
-            background: rgba(8, 11, 24, 0.82);
-            backdrop-filter: blur(18px);
-            border-bottom: 1px solid transparent;
-            transition: 0.3s;
-        }
-
-        .navbar.scrolled {
-            border-color: var(--border);
-            padding: 14px 0;
-        }
-
-        .nav-inner {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 11px;
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            font-size: 23px;
-            letter-spacing: 1px;
-        }
-
-        .logo-symbol {
-            width: 39px;
-            height: 39px;
-            border: 2px solid var(--primary);
-            border-radius: 12px;
-            display: grid;
-            place-items: center;
-            color: var(--primary);
-            font-size: 23px;
-            transform: rotate(-8deg);
-            box-shadow: 0 0 20px rgba(56, 232, 255, 0.12);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--muted);
-            font-size: 13px;
-            transition: color 0.25s;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .btn {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            gap: 9px;
-            padding: 13px 23px;
-            border-radius: 9px;
-            font-size: 13px;
-            font-weight: 700;
-            border: 1px solid transparent;
-            cursor: pointer;
-            transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-        }
-
-        .btn-primary {
-            color: #07101b;
-            background: var(--gradient);
-            box-shadow: 0 5px 24px rgba(56, 232, 255, 0.12);
-        }
-
-        .btn-primary:hover {
-            box-shadow: 0 8px 30px rgba(56, 232, 255, 0.25);
-        }
-
-        .btn-outline {
-            border-color: var(--border);
-            background: rgba(255, 255, 255, 0.025);
-            color: var(--text);
-        }
-
-        .btn-outline:hover {
-            border-color: var(--primary);
-        }
-
-        .menu-toggle {
-            display: none;
-            color: white;
-            background: none;
-            border: 0;
-            font-size: 26px;
-            cursor: pointer;
-        }
-
-        /* Hero */
-
-        .hero {
-            min-height: 760px;
-            position: relative;
-            display: flex;
-            align-items: center;
-            padding: 150px 0 90px;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: "";
-            position: absolute;
-            width: 700px;
-            height: 700px;
-            border-radius: 50%;
-            top: -150px;
-            right: -100px;
-            background: radial-gradient(circle, rgba(63, 85, 255, 0.16), transparent 68%);
-            pointer-events: none;
-        }
-
-        .hero::after {
-            content: "";
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            border-radius: 50%;
-            left: -250px;
-            bottom: -300px;
-            background: radial-gradient(circle, rgba(56, 232, 255, 0.12), transparent 70%);
-            pointer-events: none;
-        }
-
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1.05fr 0.95fr;
-            align-items: center;
-            gap: 35px;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.035);
-            padding: 9px 15px;
-            border-radius: 30px;
-            color: #c9d4f0;
-            font-size: 11px;
-            margin-bottom: 30px;
-        }
-
-        .status-dot {
-            width: 7px;
-            height: 7px;
-            background: #44f3ba;
-            border-radius: 50%;
-            box-shadow: 0 0 12px #44f3ba;
-        }
-
-        .hero h1 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(46px, 5.4vw, 73px);
-            line-height: 1.04;
-            letter-spacing: -3px;
-            margin-bottom: 25px;
-        }
-
-        .hero h1 .line {
-            display: block;
-        }
-
-        .hero-description {
-            color: var(--muted);
-            max-width: 490px;
-            font-size: 15px;
-            line-height: 1.9;
-            margin-bottom: 32px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 14px;
-        }
-
-        .hero-note {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-top: 40px;
-            color: var(--muted);
-            font-size: 11px;
-        }
-
-        .avatar-stack {
-            display: flex;
-            padding-left: 5px;
-        }
-
-        .avatar {
-            width: 29px;
-            height: 29px;
-            border: 2px solid var(--bg);
-            margin-left: -6px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #38e8ff, #7765ff);
-        }
-
-        .avatar:nth-child(2) {
-            background: linear-gradient(135deg, #ff9cda, #7765ff);
-        }
-
-        .avatar:nth-child(3) {
-            background: linear-gradient(135deg, #b6ffcf, #38a4ff);
-        }
-
-        .avatar:nth-child(4) {
-            background: linear-gradient(135deg, #ffcd8c, #ff658b);
-        }
-
-        /* Hero Orb */
-
-        .hero-visual {
-            min-height: 460px;
-            position: relative;
-            display: grid;
-            place-items: center;
-        }
-
-        .orbital-scene {
-            width: min(100%, 470px);
-            aspect-ratio: 1;
-            position: relative;
-            display: grid;
-            place-items: center;
-        }
-
-        .orbital-glow {
-            position: absolute;
-            width: 75%;
-            height: 75%;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(64, 94, 255, 0.2), transparent 70%);
-            filter: blur(25px);
-        }
-
-        .orbit {
-            position: absolute;
-            width: 87%;
-            height: 36%;
-            border: 1px solid rgba(56, 232, 255, 0.55);
-            border-radius: 50%;
-            transform: rotate(-35deg);
-            box-shadow: 0 0 16px rgba(56, 232, 255, 0.06);
-        }
-
-        .orbit.two {
-            width: 95%;
-            height: 49%;
-            transform: rotate(48deg);
-            border-color: rgba(119, 101, 255, 0.6);
-        }
-
-        .orbit.three {
-            width: 70%;
-            height: 95%;
-            transform: rotate(60deg);
-            border-color: rgba(56, 232, 255, 0.22);
-        }
-
-        .orbit-dot {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: var(--primary);
-            border-radius: 50%;
-            box-shadow: 0 0 18px var(--primary);
-        }
-
-        .orbit-dot.one {
-            top: 23%;
-            left: 19%;
-        }
-
-        .orbit-dot.two {
-            bottom: 20%;
-            right: 17%;
-            background: #9588ff;
-            box-shadow: 0 0 18px #9588ff;
-        }
-
-        .orbit-dot.three {
-            right: 14%;
-            top: 29%;
-            width: 6px;
-            height: 6px;
-        }
-
-        .core {
-            width: 185px;
-            height: 185px;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            position: relative;
-            background: radial-gradient(circle at 32% 25%, #314c88, #121b3b 55%, #080b18);
-            border: 1px solid rgba(56, 232, 255, 0.8);
-            box-shadow:
-                0 0 35px rgba(56, 232, 255, 0.17),
-                inset 0 0 35px rgba(119, 101, 255, 0.3);
-            animation: float 5s ease-in-out infinite;
-        }
-
-        .core::before {
-            content: "";
-            position: absolute;
-            inset: -12px;
-            border: 1px solid rgba(119, 101, 255, 0.3);
-            border-radius: 50%;
-        }
-
-        .core::after {
-            content: "";
-            position: absolute;
-            inset: 13px;
-            border: 1px solid rgba(56, 232, 255, 0.15);
-            border-radius: 50%;
-        }
-
-        .core-mark {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 92px;
-            font-weight: 700;
-            color: var(--primary);
-            text-shadow: 0 0 30px rgba(56, 232, 255, 0.6);
-            transform: skew(-8deg);
-        }
-
-        .floating-card {
-            position: absolute;
-            z-index: 3;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 17px;
-            background: rgba(14, 20, 41, 0.92);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
-            animation: float 5s ease-in-out infinite;
-        }
-
-        .floating-card.top {
-            top: 14%;
-            right: -2%;
-        }
-
-        .floating-card.bottom {
-            bottom: 14%;
-            left: -2%;
-            animation-delay: -2s;
-        }
-
-        .float-icon {
-            width: 37px;
-            height: 37px;
-            display: grid;
-            place-items: center;
-            border-radius: 10px;
-            background: rgba(56, 232, 255, 0.1);
-            color: var(--primary);
-            font-size: 19px;
-        }
-
-        .floating-card small {
-            display: block;
-            font-size: 10px;
-            color: var(--muted);
-        }
-
-        .floating-card strong {
-            font-size: 12px;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-12px); }
-        }
-
-        /* Trust strip */
-
-        .trust-strip {
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-            background: rgba(255, 255, 255, 0.012);
-            padding: 28px 0;
-        }
-
-        .trust-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-            text-align: center;
-        }
-
-        .trust-item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            color: #c5cee5;
-            font-size: 12px;
-        }
-
-        .trust-icon {
-            font-size: 22px;
-            color: var(--primary);
-        }
-
-        /* Ecosystem */
-
-        section {
-            padding: 110px 0;
-        }
-
-        .ecosystem {
-            background: linear-gradient(180deg, transparent, rgba(15, 21, 43, 0.5), transparent);
-        }
-
-        .ecosystem-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 22px;
-        }
-
-        .feature-card {
-            padding: 30px;
-            min-height: 265px;
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            background: var(--card);
-            position: relative;
-            overflow: hidden;
-            transition: 0.3s;
-        }
-
-        .feature-card::after {
-            content: "";
-            position: absolute;
-            width: 160px;
-            height: 160px;
-            right: -90px;
-            bottom: -90px;
-            border-radius: 50%;
-            background: rgba(56, 232, 255, 0.07);
-            transition: 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-7px);
-            border-color: rgba(56, 232, 255, 0.45);
-            background: rgba(22, 31, 59, 0.9);
-        }
-
-        .feature-card:hover::after {
-            transform: scale(1.5);
-        }
-
-        .feature-icon {
-            width: 54px;
-            height: 54px;
-            display: grid;
-            place-items: center;
-            background: rgba(56, 232, 255, 0.09);
-            border: 1px solid rgba(56, 232, 255, 0.15);
-            border-radius: 14px;
-            color: var(--primary);
-            font-size: 24px;
-            margin-bottom: 25px;
-        }
-
-        .feature-card h3 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 20px;
-            margin-bottom: 12px;
-        }
-
-        .feature-card p {
-            color: var(--muted);
-            font-size: 13px;
-            line-height: 1.9;
-        }
-
-        .feature-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 20px;
-            font-size: 12px;
-            color: var(--primary);
-            font-weight: 600;
-        }
-
-        /* About */
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 75px;
-            align-items: center;
-        }
-
-        .about-copy .section-heading {
-            max-width: 500px;
-        }
-
-        .about-copy > p {
-            color: var(--muted);
-            font-size: 14px;
-            line-height: 2;
-            margin-bottom: 20px;
-        }
-
-        .about-points {
-            display: grid;
-            gap: 17px;
-            margin: 28px 0 32px;
-        }
-
-        .about-point {
-            display: flex;
-            gap: 13px;
-            align-items: flex-start;
-        }
-
-        .check {
-            flex-shrink: 0;
-            width: 24px;
-            height: 24px;
-            display: grid;
-            place-items: center;
-            border-radius: 50%;
-            color: var(--primary);
-            background: rgba(56, 232, 255, 0.1);
-            font-size: 12px;
-        }
-
-        .about-point strong {
-            display: block;
-            font-size: 13px;
-            margin-bottom: 4px;
-        }
-
-        .about-point span {
-            color: var(--muted);
-            font-size: 12px;
-        }
-
-        .about-visual {
-            position: relative;
-            min-height: 420px;
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            background:
-                radial-gradient(ellipse at 50% 45%, rgba(72, 81, 203, 0.2), transparent 65%),
-                linear-gradient(145deg, #101831, #0b1021);
-            overflow: hidden;
-            display: grid;
-            place-items: center;
-        }
-
-        .network-lines {
-            position: absolute;
-            inset: 0;
-            opacity: 0.45;
-            background-image:
-                linear-gradient(rgba(56, 232, 255, 0.08) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(56, 232, 255, 0.08) 1px, transparent 1px);
-            background-size: 35px 35px;
-            mask-image: radial-gradient(ellipse, black, transparent 75%);
-        }
-
-        .network-center {
-            position: relative;
-            z-index: 1;
-            width: 125px;
-            height: 125px;
-            display: grid;
-            place-items: center;
-            border-radius: 30px;
-            background: linear-gradient(145deg, #1d3c6d, #171239);
-            border: 1px solid rgba(56, 232, 255, 0.65);
-            box-shadow: 0 0 55px rgba(56, 232, 255, 0.14);
-            font-size: 65px;
-            font-weight: 700;
-            color: var(--primary);
-            transform: rotate(-8deg);
-        }
-
-        .network-node {
-            position: absolute;
-            z-index: 2;
-            width: 62px;
-            height: 62px;
-            border-radius: 17px;
-            background: #121c38;
-            border: 1px solid rgba(119, 101, 255, 0.65);
-            display: grid;
-            place-items: center;
-            color: #aaa1ff;
-            font-size: 23px;
-            box-shadow: 0 0 30px rgba(119, 101, 255, 0.1);
-        }
-
-        .node-one { top: 17%; left: 18%; }
-        .node-two { top: 17%; right: 18%; }
-        .node-three { bottom: 16%; left: 18%; }
-        .node-four { bottom: 16%; right: 18%; }
-
-        /* Tokenomics */
-
-        .tokenomics {
-            background: rgba(14, 19, 39, 0.6);
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .token-panel {
-            max-width: 900px;
-            margin: auto;
-            border: 1px solid var(--border);
-            border-radius: 22px;
-            background: rgba(17, 24, 47, 0.8);
-            overflow: hidden;
-        }
-
-        .token-panel-top {
-            padding: 35px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 25px;
-        }
-
-        .token-identity {
-            display: flex;
-            align-items: center;
-            gap: 17px;
-        }
-
-        .token-logo {
-            width: 62px;
-            height: 62px;
-            display: grid;
-            place-items: center;
-            background: linear-gradient(135deg, rgba(56, 232, 255, 0.15), rgba(119, 101, 255, 0.2));
-            border: 1px solid rgba(56, 232, 255, 0.35);
-            border-radius: 18px;
-            font-size: 30px;
-            color: var(--primary);
-            font-weight: 700;
-        }
-
-        .token-identity h3 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 23px;
-        }
-
-        .token-identity p {
-            color: var(--muted);
-            font-size: 12px;
-        }
-
-        .token-tag {
-            padding: 8px 12px;
-            border: 1px solid var(--border);
-            border-radius: 7px;
-            color: var(--primary);
-            font-size: 11px;
-            font-weight: 700;
-        }
-
-        .token-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-        }
-
-        .token-item {
-            padding: 30px 35px;
-            border-right: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .token-item:nth-child(3n) {
-            border-right: 0;
-        }
-
-        .token-item:nth-last-child(-n+3) {
-            border-bottom: 0;
-        }
-
-        .token-item span {
-            display: block;
-            font-size: 11px;
-            color: var(--muted);
-            margin-bottom: 9px;
-        }
-
-        .token-item strong {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 17px;
-        }
-
-        .token-disclaimer {
-            max-width: 800px;
-            margin: 25px auto 0;
-            color: #7885a5;
-            font-size: 11px;
-            text-align: center;
-        }
-
-        /* Roadmap */
-
-        .roadmap-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 18px;
-            position: relative;
-        }
-
-        .roadmap-card {
-            padding: 25px 22px;
-            border: 1px solid var(--border);
-            background: var(--card);
-            border-radius: 15px;
-            position: relative;
-        }
-
-        .roadmap-number {
-            font-family: 'Space Grotesk', sans-serif;
-            color: rgba(56, 232, 255, 0.25);
-            font-size: 35px;
-            font-weight: 700;
-            margin-bottom: 18px;
-        }
-
-        .roadmap-card h3 {
-            font-size: 16px;
-            margin-bottom: 12px;
-        }
-
-        .roadmap-card p {
-            color: var(--muted);
-            font-size: 12px;
-            line-height: 1.9;
-        }
-
-        .roadmap-status {
-            display: inline-block;
-            margin-top: 22px;
-            padding: 6px 9px;
-            border-radius: 5px;
-            font-size: 9px;
-            letter-spacing: 1px;
-            font-weight: 700;
-            background: rgba(119, 101, 255, 0.12);
-            color: #a9a0ff;
-        }
-
-        /* Community */
-
-        .community {
-            padding-top: 30px;
-        }
-
-        .community-box {
-            position: relative;
-            text-align: center;
-            padding: 75px 30px;
-            border-radius: 25px;
-            border: 1px solid rgba(56, 232, 255, 0.2);
-            background:
-                radial-gradient(ellipse at 50% 120%, rgba(119, 101, 255, 0.2), transparent 60%),
-                radial-gradient(ellipse at 0% 0%, rgba(56, 232, 255, 0.08), transparent 50%),
-                #0e1429;
-            overflow: hidden;
-        }
-
-        .community-box h2 {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: clamp(32px, 5vw, 51px);
-            letter-spacing: -1.5px;
-            line-height: 1.2;
-            margin-bottom: 18px;
-        }
-
-        .community-box p {
-            max-width: 570px;
-            margin: 0 auto 30px;
-            color: var(--muted);
-            font-size: 14px;
-        }
-
-        .community-buttons {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 14px;
-        }
-
-        /* Footer */
-
-        footer {
-            padding: 60px 0 25px;
-        }
-
-        .footer-top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 50px;
-            padding-bottom: 45px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .footer-brand {
-            max-width: 310px;
-        }
-
-        .footer-brand p {
-            margin-top: 17px;
-            color: var(--muted);
-            font-size: 12px;
-            line-height: 1.9;
-        }
-
-        .footer-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 55px;
-        }
-
-        .footer-column h4 {
-            font-size: 12px;
-            margin-bottom: 17px;
-        }
-
-        .footer-column a {
-            display: block;
-            color: var(--muted);
-            font-size: 12px;
-            margin-bottom: 12px;
-            transition: color 0.2s;
-        }
-
-        .footer-column a:hover {
-            color: var(--primary);
-        }
-
-        .footer-bottom {
-            padding-top: 23px;
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-            color: #7885a5;
-            font-size: 11px;
-        }
-
-        .footer-bottom a {
-            color: #9ba8c5;
-        }
-
-        /* Reveal animations */
-
-        .reveal {
-            opacity: 0;
-            transform: translateY(25px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Responsive */
-
-        @media (max-width: 950px) {
-            .nav-links {
-                gap: 18px;
-            }
-
-            .nav-links a {
-                font-size: 12px;
-            }
-
-            .hero-grid {
-                grid-template-columns: 1fr 0.85fr;
-                gap: 10px;
-            }
-
-            .hero h1 {
-                font-size: 54px;
-            }
-
-            .floating-card.top {
-                right: 0;
-            }
-
-            .floating-card.bottom {
-                left: 0;
-            }
-
-            .about-grid {
-                gap: 35px;
-            }
-
-            .roadmap-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 760px) {
-            .navbar {
-                padding: 15px 0;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
-
-            .nav-links {
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                padding: 20px 5% 25px;
-                display: none;
-                flex-direction: column;
-                align-items: stretch;
-                gap: 0;
-                background: rgba(8, 11, 24, 0.98);
-                border-bottom: 1px solid var(--border);
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .nav-links li a {
-                display: block;
-                padding: 13px 0;
-                font-size: 14px;
-            }
-
-            .nav-links .nav-cta {
-                margin-top: 10px;
-                text-align: center;
-            }
-
-            .hero {
-                padding-top: 130px;
-                min-height: auto;
-            }
-
-            .hero-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-content {
-                text-align: center;
-            }
-
-            .hero-description {
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .hero-buttons,
-            .hero-note {
-                justify-content: center;
-            }
-
-            .hero h1 {
-                font-size: clamp(45px, 10vw, 65px);
-                letter-spacing: -2px;
-            }
-
-            .hero-visual {
-                min-height: 390px;
-                margin-top: 15px;
-            }
-
-            .orbital-scene {
-                max-width: 390px;
-            }
-
-            .core {
-                width: 150px;
-                height: 150px;
-            }
-
-            .core-mark {
-                font-size: 75px;
-            }
-
-            .floating-card.top {
-                right: 0;
-                top: 10%;
-            }
-
-            .floating-card.bottom {
-                left: 0;
-                bottom: 8%;
-            }
-
-            .trust-grid {
-                grid-template-columns: 1fr;
-                gap: 22px;
-            }
-
-            section {
-                padding: 80px 0;
-            }
-
-            .ecosystem-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .feature-card {
-                min-height: auto;
-            }
-
-            .about-grid {
-                grid-template-columns: 1fr;
-                gap: 35px;
-            }
-
-            .about-visual {
-                min-height: 350px;
-                order: -1;
-            }
-
-            .token-panel-top {
-                padding: 25px;
-                flex-wrap: wrap;
-            }
-
-            .token-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .token-item {
-                padding: 24px;
-                border-right: 1px solid var(--border) !important;
-                border-bottom: 1px solid var(--border) !important;
-            }
-
-            .token-item:nth-child(2n) {
-                border-right: 0 !important;
-            }
-
-            .token-item:nth-last-child(-n+2) {
-                border-bottom: 0 !important;
-            }
-
-            .roadmap-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .community-box {
-                padding: 55px 22px;
-            }
-
-            .footer-top {
-                flex-direction: column;
-                gap: 35px;
-            }
-
-            .footer-links {
-                gap: 30px;
-                justify-content: space-between;
-                width: 100%;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-            }
-        }
-
-        @media (max-width: 400px) {
-            .logo {
-                font-size: 19px;
-            }
-
-            .logo-symbol {
-                width: 34px;
-                height: 34px;
-            }
-
-            .hero-buttons .btn {
-                width: 100%;
-            }
-
-            .floating-card {
-                padding: 10px;
-            }
-
-            .floating-card strong {
-                font-size: 10px;
-            }
-
-            .token-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .token-item {
-                border-right: 0 !important;
-                border-bottom: 1px solid var(--border) !important;
-            }
-
-            .token-item:last-child {
-                border-bottom: 0 !important;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                scroll-behavior: auto !important;
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-
-            .reveal {
-                opacity: 1;
-                transform: none;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b18">
+<meta name="description" content="Shop digital and physical products with ORIX tokens on ORIX Market.">
+<title>ORIX Market | Shop With ORIX</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+    --bg: #080b18;
+    --panel: #10162b;
+    --panel2: #151d36;
+    --cyan: #38e8ff;
+    --purple: #7765ff;
+    --text: #f4f7ff;
+    --muted: #9ba8c5;
+    --border: rgba(140,166,255,.15);
+    --gradient: linear-gradient(110deg,#38e8ff,#7765ff);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: Inter, sans-serif;
+    line-height: 1.6;
+}
+
+button, input, select {
+    font: inherit;
+}
+
+button, a {
+    -webkit-tap-highlight-color: transparent;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+.container {
+    width: min(1240px,92%);
+    margin: auto;
+}
+
+.gradient-text {
+    background: var(--gradient);
+    color: transparent;
+    background-clip: text;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(8,11,24,.94);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+}
+
+.navbar {
+    min-height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: "Space Grotesk",sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.logo-icon {
+    width: 39px;
+    height: 39px;
+    border: 2px solid var(--cyan);
+    color: var(--cyan);
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    font-size: 24px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 27px;
+    align-items: center;
+}
+
+.nav-links a {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.nav-links a:hover {
+    color: var(--cyan);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.wallet-balance {
+    padding: 10px 14px;
+    background: rgba(56,232,255,.07);
+    border: 1px solid rgba(56,232,255,.2);
+    border-radius: 10px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+.wallet-balance strong {
+    color: var(--cyan);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border-radius: 9px;
+    border: 1px solid transparent;
+    font-size: 12px;
+    font-weight: 700;
+    transition: .2s;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-primary {
+    color: #07101b;
+    background: var(--gradient);
+}
+
+.btn-outline {
+    color: var(--text);
+    border-color: var(--border);
+    background: transparent;
+}
+
+.btn-outline:hover {
+    border-color: var(--cyan);
+}
+
+.mobile-menu {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 25px;
+}
+
+.hero {
+    padding: 75px 0 45px;
+    background:
+        radial-gradient(ellipse at 80% 0%,rgba(91,75,255,.17),transparent 45%),
+        radial-gradient(ellipse at 10% 50%,rgba(56,232,255,.08),transparent 35%);
+}
+
+.hero-grid {
+    display: grid;
+    grid-template-columns: 1.2fr .8fr;
+    align-items: center;
+    gap: 50px;
+}
+
+.eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--cyan);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.eyebrow::before {
+    content: "";
+    width: 22px;
+    height: 2px;
+    background: var(--cyan);
+}
+
+h1,h2,h3 {
+    font-family: "Space Grotesk",sans-serif;
+}
+
+.hero h1 {
+    font-size: clamp(40px,5.5vw,67px);
+    line-height: 1.08;
+    letter-spacing: -2px;
+    margin-bottom: 22px;
+}
+
+.hero p {
+    color: var(--muted);
+    max-width: 590px;
+    font-size: 14px;
+    line-height: 1.9;
+    margin-bottom: 28px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.market-art {
+    min-height: 280px;
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+
+.art-circle {
+    width: 235px;
+    height: 235px;
+    border-radius: 50%;
+    border: 1px solid rgba(56,232,255,.45);
+    background: radial-gradient(circle,rgba(56,232,255,.15),rgba(119,101,255,.08),transparent 70%);
+    display: grid;
+    place-items: center;
+    box-shadow: 0 0 80px rgba(56,232,255,.08);
+    position: relative;
+}
+
+.art-circle::before,.art-circle::after {
+    content: "";
+    position: absolute;
+    border: 1px solid rgba(119,101,255,.4);
+    border-radius: 50%;
+    inset: -25px;
+    transform: rotate(35deg) scaleY(.5);
+}
+
+.art-circle::after {
+    transform: rotate(-35deg) scaleY(.5);
+}
+
+.art-logo {
+    font-size: 105px;
+    font-family: "Space Grotesk",sans-serif;
+    font-weight: 700;
+    color: var(--cyan);
+    text-shadow: 0 0 35px rgba(56,232,255,.6);
+}
+
+.art-label {
+    position: absolute;
+    padding: 13px 16px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 11px;
+    box-shadow: 0 10px 40px #0004;
+}
+
+.art-label.one {
+    top: 20px;
+    right: 0;
+}
+
+.art-label.two {
+    bottom: 25px;
+    left: 0;
+}
+
+.art-label strong {
+    color: var(--cyan);
+}
+
+.benefits {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 15px;
+    margin-top: 48px;
+}
+
+.benefit {
+    padding: 17px;
+    border: 1px solid var(--border);
+    background: rgba(16,22,43,.65);
+    border-radius: 12px;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.benefit strong {
+    display: block;
+    color: var(--text);
+    margin-bottom: 5px;
+}
+
+.market-section {
+    padding: 65px 0 85px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 28px;
+}
+
+.section-heading h2 {
+    font-size: clamp(27px,3.5vw,38px);
+    margin-bottom: 8px;
+}
+
+.section-heading p {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.search-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 22px;
+}
+
+.search-box {
+    flex: 1;
+    position: relative;
+}
+
+.search-box input {
+    width: 100%;
+    min-height: 48px;
+    padding: 0 16px 0 43px;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    color: white;
+}
+
+.search-box input:focus {
+    border-color: var(--cyan);
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 12px;
+    color: var(--muted);
+}
+
+.sort-select {
+    min-height: 48px;
+    padding: 0 12px;
+    border-radius: 10px;
+    color: white;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    outline: none;
+}
+
+.categories {
+    display: flex;
+    gap: 9px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.category-btn {
+    border: 1px solid var(--border);
+    background: var(--panel);
+    color: var(--muted);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 12px;
+    transition: .2s;
+}
+
+.category-btn:hover,.category-btn.active {
+    color: var(--cyan);
+    border-color: rgba(56,232,255,.45);
+    background: rgba(56,232,255,.07);
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    gap: 20px;
+}
+
+.product-card {
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--panel);
+    border-radius: 15px;
+    transition: transform .25s,border-color .25s;
+    min-width: 0;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(56,232,255,.4);
+}
+
+.product-image {
+    position: relative;
+    height: 195px;
+    display: grid;
+    place-items: center;
+    background:
+        radial-gradient(circle at 50% 40%,rgba(119,101,255,.2),transparent 65%),
+        linear-gradient(145deg,#182342,#0d1328);
+    overflow: hidden;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform .3s;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.05);
+}
+
+.product-emoji {
+    font-size: 76px;
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,.3));
+}
+
+.product-type {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 6px 9px;
+    border-radius: 6px;
+    background: rgba(8,11,24,.88);
+    border: 1px solid var(--border);
+    font-size: 9px;
+    letter-spacing: .6px;
+    text-transform: uppercase;
+}
+
+.product-body {
+    padding: 17px;
+}
+
+.product-category {
+    color: var(--cyan);
+    text-transform: uppercase;
+    font-size: 9px;
+    letter-spacing: 1px;
+    margin-bottom: 7px;
+}
+
+.product-name {
+    font-size: 15px;
+    margin-bottom: 7px;
+    overflow-wrap: anywhere;
+}
+
+.product-description {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.7;
+    min-height: 38px;
+    margin-bottom: 15px;
+}
+
+.product-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding-top: 13px;
+    border-top: 1px solid var(--border);
+}
+
+.product-price {
+    color: var(--cyan);
+    font-weight: 800;
+    font-size: 14px;
+}
+
+.product-price small {
+    display: block;
+    color: var(--muted);
+    font-size: 9px;
+    font-weight: 400;
+}
+
+.add-btn {
+    border: none;
+    background: var(--gradient);
+    color: #07101b;
+    border-radius: 8px;
+    padding: 10px 13px;
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+.add-btn:hover {
+    filter: brightness(1.1);
+}
+
+.empty-state {
+    grid-column: 1/-1;
+    text-align: center;
+    padding: 55px 20px;
+    color: var(--muted);
+    border: 1px dashed var(--border);
+    border-radius: 14px;
+}
+
+.seller-banner {
+    margin-top: 55px;
+    padding: 35px;
+    border-radius: 17px;
+    border: 1px solid rgba(119,101,255,.3);
+    background: linear-gradient(110deg,rgba(56,232,255,.07),rgba(119,101,255,.1));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.seller-banner h3 {
+    font-size: 23px;
+    margin-bottom: 8px;
+}
+
+.seller-banner p {
+    font-size: 12px;
+    color: var(--muted);
+    max-width: 580px;
+}
+
+footer {
+    border-top: 1px solid var(--border);
+    padding: 30px 0;
+}
+
+.footer-inner {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/* Cart drawer */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(0,0,0,.65);
+    opacity: 0;
+    visibility: hidden;
+    transition: .25s;
+}
+
+.overlay.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.cart-drawer {
+    position: fixed;
+    z-index: 101;
+    right: 0;
+    top: 0;
+    height: 100dvh;
+    width: min(430px,100%);
+    background: #0c1122;
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform .3s;
+}
+
+.cart-drawer.open {
+    transform: translateX(0);
+}
+
+.drawer-header {
+    padding: 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.drawer-header h2 {
+    font-size: 22px;
+}
+
+.close-btn {
+    background: transparent;
+    color: white;
+    border: 0;
+    font-size: 25px;
+}
+
+.cart-items {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px;
+}
+
+.empty-cart {
+    text-align: center;
+    color: var(--muted);
+    padding: 50px 10px;
+    font-size: 13px;
+}
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 55px 1fr auto;
+    gap: 12px;
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+}
+
+.cart-item-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    background: var(--panel2);
+    font-size: 27px;
+    overflow: hidden;
+}
+
+.cart-item-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.cart-item h4 {
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.cart-item p {
+    color: var(--cyan);
+    font-size: 11px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.quantity-controls button {
+    width: 25px;
+    height: 25px;
+    border: 1px solid var(--border);
+    background: var(--panel2);
+    color: white;
+    border-radius: 6px;
+}
+
+.remove-item {
+    color: #ff879c;
+    background: none;
+    border: 0;
+    font-size: 11px;
+    margin-top: 6px;
+}
+
+.drawer-footer {
+    padding: 22px;
+    border-top: 1px solid var(--border);
+    background: #0e1428;
+}
+
+.summary-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.summary-line.total {
+    font-size: 17px;
+    color: white;
+    font-weight: 800;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+}
+
+.summary-line.total strong {
+    color: var(--cyan);
+}
+
+.drawer-footer .btn {
+    width: 100%;
+    margin-top: 12px;
+}
+
+/* Modals */
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 150;
+    padding: 20px;
+    background: rgba(0,0,0,.75);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+.modal-backdrop.open {
+    display: flex;
+}
+
+.modal {
+    width: min(510px,100%);
+    max-height: 90dvh;
+    overflow-y: auto;
+    padding: 27px;
+    border: 1px solid var(--border);
+    background: #10162b;
+    border-radius: 18px;
+    box-shadow: 0 20px 80px #0008;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    font-size: 22px;
+}
+
+.modal-description {
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+
+.form-group input,.form-group select,.form-group textarea {
+    width: 100%;
+    min-height: 44px;
+    padding: 11px;
+    border: 1px solid var(--border);
+    background: #0b1020;
+    color: white;
+    border-radius: 8px;
+    outline: none;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 75px;
+}
+
+.form-group input:focus,.form-group textarea:focus {
+    border-color: var(--cyan);
+}
+
+.checkout-total {
+    border: 1px solid rgba(56,232,255,.25);
+    background: rgba(56,232,255,.05);
+    padding: 16px;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+
+.checkout-total div {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 13px;
+}
+
+.checkout-total strong {
+    color: var(--cyan);
+}
+
+.notice {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.7;
+    margin: 12px 0;
+}
+
+.modal .btn {
+    width: 100%;
+}
+
+.toast {
+    position: fixed;
+    z-index: 200;
+    bottom: 25px;
+    left: 50%;
+    transform: translate(-50%,20px);
+    background: #17213c;
+    border: 1px solid rgba(56,232,255,.35);
+    padding: 13px 20px;
+    border-radius: 10px;
+    font-size: 12px;
+    box-shadow: 0 10px 35px #0006;
+    opacity: 0;
+    pointer-events: none;
+    transition: .25s;
+    max-width: 90%;
+    text-align: center;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translate(-50%,0);
+}
+
+@media(max-width:1050px) {
+    .nav-links {
+        gap: 14px;
+    }
+
+    .nav-links a {
+        font-size: 11px;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(3,minmax(0,1fr));
+    }
+
+    .header-actions .wallet-balance {
+        display: none;
+    }
+}
+
+@media(max-width:760px) {
+    .navbar {
+        min-height: 68px;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 68px;
+        background: #0b1020;
+        padding: 20px 5%;
+        border-bottom: 1px solid var(--border);
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 9px 0;
+        font-size: 13px;
+    }
+
+    .hero {
+        padding-top: 50px;
+    }
+
+    .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .hero h1 {
+        font-size: clamp(42px,10vw,60px);
+    }
+
+    .market-art {
+        min-height: 270px;
+    }
+
+    .benefits {
+        grid-template-columns: 1fr;
+        gap: 9px;
+        margin-top: 25px;
+    }
+
+    .benefit {
+        padding: 13px;
+    }
+
+    .market-section {
+        padding-top: 45px;
+    }
+
+    .products-grid {
+        grid-template-columns: repeat(2,minmax(0,1fr));
+        gap: 12px;
+    }
+
+    .product-image {
+        height: 150px;
+    }
+
+    .product-emoji {
+        font-size: 55px;
+    }
+
+    .product-body {
+        padding: 12px;
+    }
+
+    .product-name {
+        font-size: 13px;
+    }
+
+    .product-description {
+        font-size: 10px;
+    }
+
+    .product-bottom {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .add-btn {
+        width: 100%;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .search-row {
+        flex-direction: column;
+    }
+
+    .sort-select {
+        width: 100%;
+    }
+
+    .seller-banner {
+        padding: 25px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .footer-inner {
+        flex-direction: column;
+    }
+}
+
+@media(max-width:380px) {
+    .logo {
+        font-size: 18px;
+    }
+
+    .header-actions .btn {
+        padding: 10px;
+    }
+
+    .products-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .product-image {
+        height: 210px;
+    }
+
+    .product-bottom {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .add-btn {
+        width: auto;
+    }
+}
+</style>
 </head>
 
 <body>
 
-    <!-- Navigation -->
-    <header class="navbar" id="navbar">
-        <div class="container nav-inner">
+<header>
+    <div class="container navbar">
 
-            <a href="#home" class="logo" aria-label="ORIX Network Home">
-                <span class="logo-symbol">O</span>
-                <span>ORIX<span class="gradient-text"> NETWORK</span></span>
-            </a>
+        <a href="#" class="logo">
+            <span class="logo-icon">O</span>
+            <span>ORIX <span class="gradient-text">MARKET</span></span>
+        </a>
 
-            <button class="menu-toggle" id="menuToggle"
-                    aria-label="Open navigation menu"
-                    aria-expanded="false"
-                    aria-controls="navLinks">
-                ☰
+        <nav class="nav-links" id="navLinks">
+            <a href="#home">Home</a>
+            <a href="#products">Marketplace</a>
+            <a href="#digital">Digital Goods</a>
+            <a href="#physical">Physical Goods</a>
+            <a href="#sell">Become a Seller</a>
+        </nav>
+
+        <div class="header-actions">
+            <div class="wallet-balance">
+                ORIX Balance: <strong id="headerBalance">1,000 ORIX</strong>
+            </div>
+
+            <button class="btn btn-primary" id="openCart">
+                🛒 Cart <span id="cartCount">0</span>
             </button>
 
-            <ul class="nav-links" id="navLinks">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#ecosystem">Ecosystem</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#tokenomics">Tokenomics</a></li>
-                <li><a href="#roadmap">Roadmap</a></li>
-                <li>
-                    <a href="#community" class="btn btn-primary nav-cta">
-                        Join ORIX ↗
-                    </a>
-                </li>
-            </ul>
-
-        </div>
-    </header>
-
-    <main>
-
-        <!-- Hero Section -->
-        <section class="hero" id="home">
-            <div class="container hero-grid">
-
-                <div class="hero-content">
-
-                    <div class="status-badge">
-                        <span class="status-dot"></span>
-                        A NEW DIGITAL FRONTIER
-                    </div>
-
-                    <h1>
-                        <span class="line">POWERING THE</span>
-                        <span class="line">NEXT <span class="gradient-text">DIGITAL</span></span>
-                        <span class="line gradient-text">FRONTIER.</span>
-                    </h1>
-
-                    <p class="hero-description">
-                        Welcome to ORIX Network — a community-powered digital
-                        ecosystem designed to connect people, digital assets,
-                        and opportunities in a more accessible digital economy.
-                    </p>
-
-                    <div class="hero-buttons">
-                        <a href="#ecosystem" class="btn btn-primary">
-                            Explore ORIX <span>→</span>
-                        </a>
-
-                        <a href="#about" class="btn btn-outline">
-                            Discover Our Vision ↗
-                        </a>
-                    </div>
-
-                    <div class="hero-note">
-                        <div class="avatar-stack" aria-hidden="true">
-                            <span class="avatar"></span>
-                            <span class="avatar"></span>
-                            <span class="avatar"></span>
-                            <span class="avatar"></span>
-                        </div>
-
-                        <span>Built around community. Designed for possibility.</span>
-                    </div>
-
-                </div>
-
-                <div class="hero-visual" aria-label="ORIX digital network illustration">
-
-                    <div class="orbital-scene">
-
-                        <div class="orbital-glow"></div>
-
-                        <div class="orbit"></div>
-                        <div class="orbit two"></div>
-                        <div class="orbit three"></div>
-
-                        <span class="orbit-dot one"></span>
-                        <span class="orbit-dot two"></span>
-                        <span class="orbit-dot three"></span>
-
-                        <div class="core">
-                            <span class="core-mark">O</span>
-                        </div>
-
-                        <div class="floating-card top">
-                            <div class="float-icon">◇</div>
-                            <div>
-                                <small>THE ECOSYSTEM</small>
-                                <strong>Connected by ORIX</strong>
-                            </div>
-                        </div>
-
-                        <div class="floating-card bottom">
-                            <div class="float-icon">⌘</div>
-                            <div>
-                                <small>THE VISION</small>
-                                <strong>One Network. More Possibilities.</strong>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Core Principles -->
-        <div class="trust-strip">
-            <div class="container trust-grid">
-
-                <div class="trust-item">
-                    <span class="trust-icon">◈</span>
-                    <span>COMMUNITY-POWERED INNOVATION</span>
-                </div>
-
-                <div class="trust-item">
-                    <span class="trust-icon">⌘</span>
-                    <span>CONNECTED DIGITAL EXPERIENCES</span>
-                </div>
-
-                <div class="trust-item">
-                    <span class="trust-icon">✧</span>
-                    <span>BUILT FOR THE FUTURE</span>
-                </div>
-
-            </div>
+            <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">
+                ☰
+            </button>
         </div>
 
-        <!-- Ecosystem -->
-        <section class="ecosystem" id="ecosystem">
-            <div class="container">
+    </div>
+</header>
 
-                <div class="section-header reveal">
-                    <span class="section-label">THE ECOSYSTEM</span>
+<main>
 
-                    <h2 class="section-heading">
-                        More Than a Token.<br>
-                        <span class="gradient-text">A Connected Experience.</span>
-                    </h2>
+<section class="hero" id="home">
+    <div class="container">
 
-                    <p class="section-description">
-                        ORIX brings together digital participation, wallet
-                        experiences, and community-driven growth under one vision.
-                    </p>
-                </div>
+        <div class="hero-grid">
 
-                <div class="ecosystem-grid">
+            <div>
+                <div class="eyebrow">WELCOME TO ORIX MARKET</div>
 
-                    <article class="feature-card reveal">
-                        <div class="feature-icon">◈</div>
+                <h1>
+                    Shop the World.<br>
+                    Pay with <span class="gradient-text">ORIX.</span>
+                </h1>
 
-                        <h3>Mining & Rewards</h3>
-
-                        <p>
-                            Explore participation-based reward experiences
-                            designed to encourage engagement and long-term
-                            involvement in the ORIX community.
-                        </p>
-
-                        <a href="#community" class="feature-link">
-                            Explore possibilities <span>→</span>
-                        </a>
-                    </article>
-
-                    <article class="feature-card reveal">
-                        <div class="feature-icon">▣</div>
-
-                        <h3>Digital Wallet</h3>
-
-                        <p>
-                            A vision for a convenient digital asset experience
-                            where users can access their ORIX account and manage
-                            supported assets through a connected platform.
-                        </p>
-
-                        <a href="#about" class="feature-link">
-                            Discover the vision <span>→</span>
-                        </a>
-                    </article>
-
-                    <article class="feature-card reveal">
-                        <div class="feature-icon">⌘</div>
-
-                        <h3>Community Network</h3>
-
-                        <p>
-                            Connect with other participants, share ideas,
-                            explore new opportunities, and help shape the
-                            future direction of the ORIX ecosystem.
-                        </p>
-
-                        <a href="#community" class="feature-link">
-                            Meet the community <span>→</span>
-                        </a>
-                    </article>
-
-                </div>
-            </div>
-        </section>
-
-        <!-- About ORIX -->
-        <section id="about">
-            <div class="container about-grid">
-
-                <div class="about-copy reveal">
-
-                    <span class="section-label">WHY ORIX</span>
-
-                    <h2 class="section-heading">
-                        The Future Is<br>
-                        <span class="gradient-text">Built Together.</span>
-                    </h2>
-
-                    <p>
-                        We believe the next generation of digital networks
-                        should be accessible, useful, and shaped by the people
-                        who participate in them.
-                    </p>
-
-                    <p>
-                        ORIX Network aims to bring that belief to life through
-                        an evolving ecosystem focused on digital participation,
-                        practical tools, and community growth.
-                    </p>
-
-                    <div class="about-points">
-
-                        <div class="about-point">
-                            <span class="check">✓</span>
-                            <div>
-                                <strong>Accessibility First</strong>
-                                <span>Building digital experiences with everyday users in mind.</span>
-                            </div>
-                        </div>
-
-                        <div class="about-point">
-                            <span class="check">✓</span>
-                            <div>
-                                <strong>Community at the Core</strong>
-                                <span>Creating room for participation, feedback, and shared progress.</span>
-                            </div>
-                        </div>
-
-                        <div class="about-point">
-                            <span class="check">✓</span>
-                            <div>
-                                <strong>Growth Through Innovation</strong>
-                                <span>Exploring practical applications for a connected digital ecosystem.</span>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <a href="#roadmap" class="btn btn-primary">
-                        Explore Our Roadmap →
-                    </a>
-
-                </div>
-
-                <div class="about-visual reveal">
-
-                    <div class="network-lines"></div>
-
-                    <div class="network-node node-one">◇</div>
-                    <div class="network-node node-two">⌘</div>
-                    <div class="network-node node-three">▣</div>
-                    <div class="network-node node-four">✧</div>
-
-                    <div class="network-center">O</div>
-
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Tokenomics -->
-        <section class="tokenomics" id="tokenomics">
-            <div class="container">
-
-                <div class="section-header reveal">
-                    <span class="section-label">THE ORIX TOKEN</span>
-
-                    <h2 class="section-heading">
-                        Understanding <span class="gradient-text">ORIX.</span>
-                    </h2>
-
-                    <p class="section-description">
-                        A look at the intended role of the ORIX token within
-                        its evolving digital ecosystem.
-                    </p>
-                </div>
-
-                <div class="token-panel reveal">
-
-                    <div class="token-panel-top">
-
-                        <div class="token-identity">
-                            <div class="token-logo">O</div>
-
-                            <div>
-                                <h3>ORIX Token</h3>
-                                <p>ORIX Network Digital Asset</p>
-                            </div>
-                        </div>
-
-                        <span class="token-tag">TOKEN OVERVIEW</span>
-
-                    </div>
-
-                    <div class="token-grid">
-
-                        <div class="token-item">
-                            <span>Token Name</span>
-                            <strong>ORIX</strong>
-                        </div>
-
-                        <div class="token-item">
-                            <span>Token Symbol</span>
-                            <strong>ORIX</strong>
-                        </div>
-
-                        <div class="token-item">
-                            <span>Token Standard</span>
-                            <strong>To Be Confirmed</strong>
-                        </div>
-
-                        <div class="token-item">
-                            <span>Total Supply</span>
-                            <strong>To Be Announced</strong>
-                        </div>
-
-                        <div class="token-item">
-                            <span>Blockchain Network</span>
-                            <strong>To Be Confirmed</strong>
-                        </div>
-
-                        <div class="token-item">
-                            <span>Token Utility</span>
-                            <strong>Ecosystem Participation</strong>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <p class="token-disclaimer">
-                    Token specifications are placeholders pending official
-                    confirmation. This website does not represent an official
-                    token launch announcement, price quotation, or investment offer.
+                <p>
+                    Discover digital products, everyday essentials, and unique
+                    finds from sellers across the ORIX ecosystem. One marketplace,
+                    endless possibilities, powered by ORIX tokens.
                 </p>
 
-            </div>
-        </section>
-
-        <!-- Roadmap -->
-        <section id="roadmap">
-            <div class="container">
-
-                <div class="section-header reveal">
-                    <span class="section-label">THE ROADMAP</span>
-
-                    <h2 class="section-heading">
-                        Building the <span class="gradient-text">ORIX Future.</span>
-                    </h2>
-
-                    <p class="section-description">
-                        A proposed development framework for the ORIX Network
-                        ecosystem. Milestones and dates will be confirmed officially.
-                    </p>
-                </div>
-
-                <div class="roadmap-grid">
-
-                    <article class="roadmap-card reveal">
-                        <div class="roadmap-number">01</div>
-
-                        <h3>Foundation</h3>
-
-                        <p>
-                            Establish the network identity, define tokenomics,
-                            document the technical architecture, and prepare
-                            the core project infrastructure.
-                        </p>
-
-                        <span class="roadmap-status">FOUNDATION PHASE</span>
-                    </article>
-
-                    <article class="roadmap-card reveal">
-                        <div class="roadmap-number">02</div>
-
-                        <h3>Ecosystem Development</h3>
-
-                        <p>
-                            Develop and refine essential user experiences,
-                            including account management, wallet functionality,
-                            and community participation features.
-                        </p>
-
-                        <span class="roadmap-status">PLANNED</span>
-                    </article>
-
-                    <article class="roadmap-card reveal">
-                        <div class="roadmap-number">03</div>
-
-                        <h3>Token & Integration</h3>
-
-                        <p>
-                            Finalize token specifications, assess deployment
-                            requirements, and conduct appropriate security
-                            reviews before any public release.
-                        </p>
-
-                        <span class="roadmap-status">PLANNED</span>
-                    </article>
-
-                    <article class="roadmap-card reveal">
-                        <div class="roadmap-number">04</div>
-
-                        <h3>Expansion</h3>
-
-                        <p>
-                            Explore ecosystem partnerships, broaden community
-                            participation, and introduce additional utilities
-                            as the project matures.
-                        </p>
-
-                        <span class="roadmap-status">FUTURE VISION</span>
-                    </article>
-
-                </div>
-
-            </div>
-        </section>
-
-        <!-- Community -->
-        <section class="community" id="community">
-            <div class="container">
-
-                <div class="community-box reveal">
-
-                    <span class="section-label">JOIN THE MOVEMENT</span>
-
-                    <h2>
-                        The Next Chapter<br>
-                        <span class="gradient-text">Starts With You.</span>
-                    </h2>
-
-                    <p>
-                        Be part of the ORIX Network journey. Follow the project's
-                        progress, discover upcoming developments, and help build
-                        a stronger digital community.
-                    </p>
-
-                    <div class="community-buttons">
-                        <!-- Replace # with your official community URLs -->
-                        <a href="#" class="btn btn-primary community-link">
-                            Join Our Community ↗
-                        </a>
-
-                        <a href="#" class="btn btn-outline community-link">
-                            Follow ORIX Updates ↗
-                        </a>
-                    </div>
-
-                </div>
-
-            </div>
-        </section>
-
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-
-            <div class="footer-top">
-
-                <div class="footer-brand">
-
-                    <a href="#home" class="logo">
-                        <span class="logo-symbol">O</span>
-                        <span>ORIX<span class="gradient-text"> NETWORK</span></span>
+                <div class="hero-buttons">
+                    <a href="#products" class="btn btn-primary">
+                        Explore Products →
                     </a>
 
-                    <p>
-                        One network. Limitless possibilities.
-                        Exploring a more connected digital future through
-                        innovation, accessibility, and community.
-                    </p>
-
+                    <a href="#sell" class="btn btn-outline">
+                        Become a Seller
+                    </a>
                 </div>
-
-                <div class="footer-links">
-
-                    <div class="footer-column">
-                        <h4>Explore</h4>
-                        <a href="#home">Home</a>
-                        <a href="#ecosystem">Ecosystem</a>
-                        <a href="#about">About ORIX</a>
-                        <a href="#roadmap">Roadmap</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h4>Token</h4>
-                        <a href="#tokenomics">Token Overview</a>
-                        <a href="#tokenomics">Tokenomics</a>
-                        <a href="#community">Token Updates</a>
-                    </div>
-
-                    <div class="footer-column">
-                        <h4>Community</h4>
-                        <a href="#" class="community-link">Telegram</a>
-                        <a href="#" class="community-link">X / Twitter</a>
-                        <a href="#" class="community-link">Contact</a>
-                    </div>
-
-                </div>
-
             </div>
 
-            <div class="footer-bottom">
+            <div class="market-art">
+                <div class="art-circle">
+                    <span class="art-logo">O</span>
+                </div>
 
-                <span>
-                    © <span id="year"></span> ORIX Network. All rights reserved.
-                </span>
+                <div class="art-label one">
+                    <strong>ORIX PAY</strong><br>
+                    One token. More possibilities.
+                </div>
 
-                <span>
-                    Digital assets involve risk. Nothing on this website
-                    constitutes financial advice.
-                </span>
-
+                <div class="art-label two">
+                    <strong>Digital + Physical</strong><br>
+                    Your marketplace.
+                </div>
             </div>
 
         </div>
-    </footer>
 
-    <script>
-        // Mobile navigation
-        const menuToggle = document.getElementById("menuToggle");
-        const navLinks = document.getElementById("navLinks");
+        <div class="benefits">
+            <div class="benefit">
+                <strong>◇ Digital Products</strong>
+                Downloadable products and digital services.
+            </div>
 
-        menuToggle.addEventListener("click", () => {
-            const isOpen = navLinks.classList.toggle("active");
+            <div class="benefit">
+                <strong>▣ Physical Products</strong>
+                Shop tangible products with delivery options.
+            </div>
 
-            menuToggle.setAttribute("aria-expanded", String(isOpen));
-            menuToggle.setAttribute(
-                "aria-label",
-                isOpen ? "Close navigation menu" : "Open navigation menu"
-            );
+            <div class="benefit">
+                <strong>◈ ORIX Payments</strong>
+                Designed for token-powered checkout.
+            </div>
+        </div>
 
-            menuToggle.textContent = isOpen ? "✕" : "☰";
-        });
+    </div>
+</section>
 
-        // Close mobile menu after selecting a section
-        document.querySelectorAll("#navLinks a").forEach(link => {
-            link.addEventListener("click", () => {
-                navLinks.classList.remove("active");
-                menuToggle.setAttribute("aria-expanded", "false");
-                menuToggle.setAttribute("aria-label", "Open navigation menu");
-                menuToggle.textContent = "☰";
-            });
-        });
+<section class="market-section" id="products">
+    <div class="container">
 
-        // Navbar scroll effect
-        const navbar = document.getElementById("navbar");
+        <div class="section-heading">
+            <div>
+                <div class="eyebrow">THE MARKETPLACE</div>
+                <h2>Discover <span class="gradient-text">Products.</span></h2>
+                <p>Find something you love and pay with ORIX.</p>
+            </div>
 
-        function updateNavbar() {
-            navbar.classList.toggle("scrolled", window.scrollY > 30);
+            <div style="font-size:12px;color:var(--muted)">
+                <span id="productCount">0</span> products available
+            </div>
+        </div>
+
+        <div class="search-row">
+            <div class="search-box">
+                <span class="search-icon">⌕</span>
+                <input id="searchInput" type="search"
+                       placeholder="Search products, categories, or sellers..."
+                       aria-label="Search products">
+            </div>
+
+            <select class="sort-select" id="sortSelect" aria-label="Sort products">
+                <option value="featured">Featured products</option>
+                <option value="low">Price: Low to high</option>
+                <option value="high">Price: High to low</option>
+                <option value="name">Name: A to Z</option>
+            </select>
+        </div>
+
+        <div class="categories" id="categories">
+            <button class="category-btn active" data-category="all">All Products</button>
+            <button class="category-btn" data-category="digital" id="digital">Digital Goods</button>
+            <button class="category-btn" data-category="physical" id="physical">Physical Goods</button>
+            <button class="category-btn" data-category="ebooks">E-books</button>
+            <button class="category-btn" data-category="software">Software</button>
+            <button class="category-btn" data-category="fashion">Fashion</button>
+            <button class="category-btn" data-category="electronics">Electronics</button>
+        </div>
+
+        <div class="products-grid" id="productsGrid"></div>
+
+        <div class="seller-banner" id="sell">
+            <div>
+                <h3>Have Something to Sell?</h3>
+                <p>
+                    Bring your products to ORIX Market. Build your storefront,
+                    reach potential customers, and accept ORIX token payments
+                    once seller onboarding and marketplace payments are enabled.
+                </p>
+            </div>
+
+            <button class="btn btn-primary" id="sellerBtn">
+                Become a Seller →
+            </button>
+        </div>
+
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <div class="container footer-inner">
+        <div>© <span id="year"></span> ORIX Market. Part of ORIX Network.</div>
+        <div>Digital assets involve risk. Always verify product and payment details.</div>
+    </div>
+</footer>
+
+<!-- Cart overlay -->
+<div class="overlay" id="cartOverlay"></div>
+
+<aside class="cart-drawer" id="cartDrawer"
+       role="dialog" aria-modal="true" aria-label="Shopping cart">
+
+    <div class="drawer-header">
+        <h2>Your Cart <span class="gradient-text" id="drawerCount">(0)</span></h2>
+        <button class="close-btn" id="closeCart" aria-label="Close cart">×</button>
+    </div>
+
+    <div class="cart-items" id="cartItems"></div>
+
+    <div class="drawer-footer">
+
+        <div class="summary-line">
+            <span>Items subtotal</span>
+            <span id="cartSubtotal">0 ORIX</span>
+        </div>
+
+        <div class="summary-line">
+            <span>Shipping</span>
+            <span id="shippingCost">Calculated at checkout</span>
+        </div>
+
+        <div class="summary-line total">
+            <span>Subtotal</span>
+            <strong id="cartTotal">0 ORIX</strong>
+        </div>
+
+        <p class="notice">
+            Final shipping charges, payment verification, and any applicable
+            fees must be confirmed before an order is submitted.
+        </p>
+
+        <button class="btn btn-primary" id="checkoutBtn">
+            Continue to Checkout →
+        </button>
+
+        <button class="btn btn-outline" id="continueShopping">
+            Continue Shopping
+        </button>
+
+    </div>
+</aside>
+
+<!-- Checkout modal -->
+<div class="modal-backdrop" id="checkoutModal">
+    <div class="modal" role="dialog" aria-modal="true"
+         aria-labelledby="checkoutTitle">
+
+        <div class="modal-header">
+            <h2 id="checkoutTitle">Checkout</h2>
+            <button class="close-btn" data-close-modal="checkoutModal"
+                    aria-label="Close checkout">×</button>
+        </div>
+
+        <p class="modal-description">
+            Review your order and provide the information needed for delivery.
+        </p>
+
+        <form id="checkoutForm">
+
+            <div class="form-group">
+                <label for="customerName">Full name</label>
+                <input id="customerName" name="customerName"
+                       autocomplete="name" required maxlength="120">
+            </div>
+
+            <div class="form-group">
+                <label for="customerEmail">Email address</label>
+                <input id="customerEmail" name="customerEmail" type="email"
+                       autocomplete="email" required maxlength="254">
+            </div>
+
+            <div id="shippingFields" hidden>
+
+                <div class="form-group">
+                    <label for="shippingAddress">Delivery address</label>
+                    <textarea id="shippingAddress" name="shippingAddress"
+                              autocomplete="street-address"
+                              maxlength="500"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="shippingCity">City / Town</label>
+                    <input id="shippingCity" name="shippingCity"
+                           autocomplete="address-level2" maxlength="100">
+                </div>
+
+                <div class="form-group">
+                    <label for="shippingPhone">Phone number</label>
+                    <input id="shippingPhone" name="shippingPhone"
+                           autocomplete="tel" maxlength="30">
+                </div>
+
+            </div>
+
+            <div class="checkout-total">
+                <div>
+                    <span>Products subtotal</span>
+                    <strong id="checkoutSubtotal">0 ORIX</strong>
+                </div>
+                <p class="notice">
+                    Physical product shipping charges are not included until
+                    the shipping rate is confirmed.
+                </p>
+            </div>
+
+            <p class="notice">
+                Demo only: submitting this form does not charge tokens or create
+                a real order. Real checkout must verify payments on the server
+                before an order is confirmed.
+            </p>
+
+            <button class="btn btn-primary" type="submit">
+                Review Demo Order
+            </button>
+
+        </form>
+    </div>
+</div>
+
+<!-- Seller modal -->
+<div class="modal-backdrop" id="sellerModal">
+    <div class="modal" role="dialog" aria-modal="true"
+         aria-labelledby="sellerTitle">
+
+        <div class="modal-header">
+            <h2 id="sellerTitle">Become an ORIX Seller</h2>
+            <button class="close-btn" data-close-modal="sellerModal"
+                    aria-label="Close seller form">×</button>
+        </div>
+
+        <p class="modal-description">
+            Register your interest in selling digital or physical products.
+            Seller registration will need to be connected to your backend.
+        </p>
+
+        <form id="sellerForm">
+
+            <div class="form-group">
+                <label for="sellerName">Your name or business name</label>
+                <input id="sellerName" required maxlength="150">
+            </div>
+
+            <div class="form-group">
+                <label for="sellerEmail">Email address</label>
+                <input id="sellerEmail" type="email" required maxlength="254">
+            </div>
+
+            <div class="form-group">
+                <label for="sellerType">What do you want to sell?</label>
+                <select id="sellerType" required>
+                    <option value="">Choose a category</option>
+                    <option value="digital">Digital products</option>
+                    <option value="physical">Physical products</option>
+                    <option value="both">Both</option>
+                </select>
+            </div>
+
+            <button class="btn btn-primary" type="submit">
+                Submit Demo Application
+            </button>
+
+            <p class="notice">
+                This demonstration does not save your application to a server.
+            </p>
+
+        </form>
+    </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+
+/*
+ * ORIX MARKET FRONTEND DEMO
+ *
+ * Important:
+ * - Product prices are sample values, not official token prices.
+ * - The balance below is simulated.
+ * - Orders and seller applications are not saved to a backend.
+ * - Never trust a client-side balance or client-submitted payment status.
+ */
+
+const DEMO_BALANCE = 1000;
+
+const products = [
+    {
+        id: "D001",
+        name: "Premium E-book Collection",
+        category: "ebooks",
+        type: "digital",
+        price: 25,
+        emoji: "📚",
+        description: "A sample collection of educational digital books.",
+        seller: "ORIX Digital Studio",
+        featured: true
+    },
+    {
+        id: "D002",
+        name: "Creative Design Templates",
+        category: "digital",
+        type: "digital",
+        price: 45,
+        emoji: "🎨",
+        description: "Ready-to-customize templates for creative projects.",
+        seller: "Pixel House",
+        featured: true
+    },
+    {
+        id: "D003",
+        name: "Productivity Software License",
+        category: "software",
+        type: "digital",
+        price: 120,
+        emoji: "💻",
+        description: "Sample listing for a digital software license.",
+        seller: "Tech Vault",
+        featured: true
+    },
+    {
+        id: "D004",
+        name: "Website UI Kit",
+        category: "digital",
+        type: "digital",
+        price: 80,
+        emoji: "🧩",
+        description: "A digital interface kit for website projects.",
+        seller: "Pixel House",
+        featured: false
+    },
+    {
+        id: "D005",
+        name: "Online Learning Bundle",
+        category: "ebooks",
+        type: "digital",
+        price: 65,
+        emoji: "🎓",
+        description: "A sample bundle of downloadable learning materials.",
+        seller: "ORIX Academy",
+        featured: false
+    },
+    {
+        id: "P001",
+        name: "Wireless Headphones",
+        category: "electronics",
+        type: "physical",
+        price: 350,
+        emoji: "🎧",
+        description: "Sample listing for wireless audio headphones.",
+        seller: "Gadget Hub",
+        featured: true
+    },
+    {
+        id: "P002",
+        name: "Classic Streetwear Hoodie",
+        category: "fashion",
+        type: "physical",
+        price: 180,
+        emoji: "👕",
+        description: "Casual apparel listing. Size and color require confirmation.",
+        seller: "Urban Thread",
+        featured: true
+    },
+    {
+        id: "P003",
+        name: "Smart Wristwatch",
+        category: "electronics",
+        type: "physical",
+        price: 420,
+        emoji: "⌚",
+        description: "Sample listing for a smart wearable device.",
+        seller: "Gadget Hub",
+        featured: false
+    },
+    {
+        id: "P004",
+        name: "Everyday Backpack",
+        category: "physical",
+        type: "physical",
+        price: 150,
+        emoji: "🎒",
+        description: "A sample everyday backpack listing.",
+        seller: "Urban Thread",
+        featured: false
+    },
+    {
+        id: "P005",
+        name: "Wireless Keyboard",
+        category: "electronics",
+        type: "physical",
+        price: 230,
+        emoji: "⌨️",
+        description: "Sample listing for a wireless computer keyboard.",
+        seller: "Tech Vault",
+        featured: false
+    },
+    {
+        id: "P006",
+        name: "Premium Sneakers",
+        category: "fashion",
+        type: "physical",
+        price: 290,
+        emoji: "👟",
+        description: "Sample footwear listing. Confirm size and availability.",
+        seller: "Urban Thread",
+        featured: false
+    },
+    {
+        id: "D006",
+        name: "Digital Business Planner",
+        category: "digital",
+        type: "digital",
+        price: 35,
+        emoji: "📒",
+        description: "A digital planner for organizing business activities.",
+        seller: "ORIX Digital Studio",
+        featured: false
+    }
+];
+
+const state = {
+    category: "all",
+    search: "",
+    sort: "featured",
+    cart: {},
+    balance: DEMO_BALANCE
+};
+
+const money = amount =>
+    `${Number(amount).toLocaleString("en-US")} ORIX`;
+
+const escapeHTML = value =>
+    String(value).replace(/[&<>"']/g, character => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[character]);
+
+const elements = {
+    grid: document.getElementById("productsGrid"),
+    count: document.getElementById("productCount"),
+    search: document.getElementById("searchInput"),
+    sort: document.getElementById("sortSelect"),
+    cartCount: document.getElementById("cartCount"),
+    drawerCount: document.getElementById("drawerCount"),
+    cartItems: document.getElementById("cartItems"),
+    subtotal: document.getElementById("cartSubtotal"),
+    total: document.getElementById("cartTotal"),
+    checkoutSubtotal: document.getElementById("checkoutSubtotal"),
+    headerBalance: document.getElementById("headerBalance"),
+    shippingCost: document.getElementById("shippingCost"),
+    shippingFields: document.getElementById("shippingFields"),
+    toast: document.getElementById("toast")
+};
+
+function showToast(message) {
+    elements.toast.textContent = message;
+    elements.toast.classList.add("show");
+
+    clearTimeout(showToast.timer);
+
+    showToast.timer = setTimeout(() => {
+        elements.toast.classList.remove("show");
+    }, 3000);
+}
+
+function getProduct(id) {
+    return products.find(product => product.id === id);
+}
+
+function getCartCount() {
+    return Object.values(state.cart)
+        .reduce((total, quantity) => total + quantity, 0);
+}
+
+function getCartSubtotal() {
+    return Object.entries(state.cart).reduce((total, [id, quantity]) => {
+        const product = getProduct(id);
+        return total + (product ? product.price * quantity : 0);
+    }, 0);
+}
+
+function cartHasPhysicalProducts() {
+    return Object.entries(state.cart).some(([id, quantity]) => {
+        const product = getProduct(id);
+        return quantity > 0 && product?.type === "physical";
+    });
+}
+
+function renderProducts() {
+    let filtered = products.filter(product => {
+        const matchesCategory =
+            state.category === "all" ||
+            product.category === state.category ||
+            product.type === state.category;
+
+        const searchText = [
+            product.name,
+            product.category,
+            product.description,
+            product.seller,
+            product.type
+        ].join(" ").toLowerCase();
+
+        const matchesSearch = searchText.includes(state.search);
+
+        return matchesCategory && matchesSearch;
+    });
+
+    if (state.sort === "low") {
+        filtered.sort((a, b) => a.price - b.price);
+    } else if (state.sort === "high") {
+        filtered.sort((a, b) => b.price - a.price);
+    } else if (state.sort === "name") {
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+    } else {
+        filtered.sort((a, b) => Number(b.featured) - Number(a.featured));
+    }
+
+    elements.count.textContent = filtered.length;
+
+    if (!filtered.length) {
+        elements.grid.innerHTML = `
+            <div class="empty-state">
+                <h3>No products found</h3>
+                <p>Try a different search term or category.</p>
+            </div>`;
+        return;
+    }
+
+    elements.grid.innerHTML = filtered.map(product => {
+        const isImage = Boolean(product.imageUrl);
+
+        const visual = isImage
+            ? `<img src="${escapeHTML(product.imageUrl)}"
+                    alt="${escapeHTML(product.name)}" loading="lazy">`
+            : `<span class="product-emoji" aria-hidden="true">${product.emoji}</span>`;
+
+        return `
+            <article class="product-card">
+                <div class="product-image">
+                    ${visual}
+                    <span class="product-type">
+                        ${product.type === "digital"
+                            ? "↓ Digital Delivery"
+                            : "□ Physical Product"}
+                    </span>
+                </div>
+
+                <div class="product-body">
+                    <div class="product-category">
+                        ${escapeHTML(product.category)}
+                    </div>
+
+                    <h3 class="product-name">
+                        ${escapeHTML(product.name)}
+                    </h3>
+
+                    <p class="product-description">
+                        ${escapeHTML(product.description)}
+                    </p>
+
+                    <div class="product-bottom">
+                        <div class="product-price">
+                            ${money(product.price)}
+                            <small>Seller: ${escapeHTML(product.seller)}</small>
+                        </div>
+
+                        <button class="add-btn" data-add="${product.id}">
+                            + Add
+                        </button>
+                    </div>
+                </div>
+            </article>`;
+    }).join("");
+}
+
+function addToCart(id) {
+    const product = getProduct(id);
+
+    if (!product) {
+        showToast("Product not found.");
+        return;
+    }
+
+    state.cart[id] = (state.cart[id] || 0) + 1;
+
+    renderCart();
+    showToast(`${product.name} added to your cart.`);
+}
+
+function changeQuantity(id, change) {
+    if (!state.cart[id]) return;
+
+    const newQuantity = state.cart[id] + change;
+
+    if (newQuantity <= 0) {
+        delete state.cart[id];
+    } else {
+        state.cart[id] = newQuantity;
+    }
+
+    renderCart();
+}
+
+function removeFromCart(id) {
+    delete state.cart[id];
+    renderCart();
+}
+
+function renderCart() {
+    const count = getCartCount();
+    const subtotal = getCartSubtotal();
+
+    elements.cartCount.textContent = count;
+    elements.drawerCount.textContent = `(${count})`;
+    elements.subtotal.textContent = money(subtotal);
+    elements.total.textContent = money(subtotal);
+    elements.checkoutSubtotal.textContent = money(subtotal);
+
+    elements.shippingCost.textContent = cartHasPhysicalProducts()
+        ? "Calculated at checkout"
+        : "Not applicable";
+
+    elements.shippingFields.hidden = !cartHasPhysicalProducts();
+
+    if (count === 0) {
+        elements.cartItems.innerHTML = `
+            <div class="empty-cart">
+                <div style="font-size:45px;margin-bottom:15px">🛒</div>
+                <h3>Your cart is empty</h3>
+                <p style="margin-top:8px">Explore the marketplace and find something you love.</p>
+            </div>`;
+        return;
+    }
+
+    elements.cartItems.innerHTML = Object.entries(state.cart)
+        .map(([id, quantity]) => {
+            const product = getProduct(id);
+
+            if (!product) return "";
+
+            const visual = product.imageUrl
+                ? `<img src="${escapeHTML(product.imageUrl)}"
+                        alt="${escapeHTML(product.name)}">`
+                : escapeHTML(product.emoji);
+
+            return `
+                <div class="cart-item">
+                    <div class="cart-item-icon">${visual}</div>
+
+                    <div>
+                        <h4>${escapeHTML(product.name)}</h4>
+                        <p>${money(product.price * quantity)}</p>
+
+                        <div class="quantity-controls">
+                            <button data-minus="${id}" aria-label="Decrease quantity">−</button>
+                            <span>${quantity}</span>
+                            <button data-plus="${id}" aria-label="Increase quantity">+</button>
+                        </div>
+
+                        <button class="remove-item" data-remove="${id}">
+                            Remove
+                        </button>
+                    </div>
+
+                    <div style="font-size:10px;color:var(--muted)">
+                        ${escapeHTML(product.type)}
+                    </div>
+                </div>`;
+        }).join("");
+}
+
+function openCart() {
+    document.getElementById("cartOverlay").classList.add("open");
+    document.getElementById("cartDrawer").classList.add("open");
+    document.body.style.overflow = "hidden";
+}
+
+function closeCart() {
+    document.getElementById("cartOverlay").classList.remove("open");
+    document.getElementById("cartDrawer").classList.remove("open");
+    document.body.style.overflow = "";
+}
+
+function openModal(id) {
+    closeCart();
+    document.getElementById(id).classList.add("open");
+    document.body.style.overflow = "hidden";
+}
+
+function closeModal(id) {
+    document.getElementById(id).classList.remove("open");
+    document.body.style.overflow = "";
+}
+
+/* Product event delegation */
+
+elements.grid.addEventListener("click", event => {
+    const button = event.target.closest("[data-add]");
+
+    if (button) {
+        addToCart(button.dataset.add);
+    }
+});
+
+/* Cart event delegation */
+
+elements.cartItems.addEventListener("click", event => {
+    const minus = event.target.closest("[data-minus]");
+    const plus = event.target.closest("[data-plus]");
+    const remove = event.target.closest("[data-remove]");
+
+    if (minus) changeQuantity(minus.dataset.minus, -1);
+    if (plus) changeQuantity(plus.dataset.plus, 1);
+    if (remove) removeFromCart(remove.dataset.remove);
+});
+
+/* Search and filters */
+
+elements.search.addEventListener("input", event => {
+    state.search = event.target.value.trim().toLowerCase();
+    renderProducts();
+});
+
+elements.sort.addEventListener("change", event => {
+    state.sort = event.target.value;
+    renderProducts();
+});
+
+document.getElementById("categories").addEventListener("click", event => {
+    const button = event.target.closest("[data-category]");
+
+    if (!button) return;
+
+    state.category = button.dataset.category;
+
+    document.querySelectorAll(".category-btn").forEach(item => {
+        item.classList.toggle("active", item === button);
+    });
+
+    renderProducts();
+});
+
+/* Cart controls */
+
+document.getElementById("openCart").addEventListener("click", openCart);
+document.getElementById("closeCart").addEventListener("click", closeCart);
+document.getElementById("cartOverlay").addEventListener("click", closeCart);
+document.getElementById("continueShopping").addEventListener("click", closeCart);
+
+/* Checkout */
+
+document.getElementById("checkoutBtn").addEventListener("click", () => {
+    if (getCartCount() === 0) {
+        showToast("Add products to your cart first.");
+        return;
+    }
+
+    openModal("checkoutModal");
+});
+
+document.getElementById("checkoutForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    if (getCartCount() === 0) {
+        showToast("Your cart is empty.");
+        closeModal("checkoutModal");
+        return;
+    }
+
+    const orderPreview = {
+        customerName: document.getElementById("customerName").value.trim(),
+        customerEmail: document.getElementById("customerEmail").value.trim(),
+        shippingAddress: document.getElementById("shippingAddress").value.trim(),
+        shippingCity: document.getElementById("shippingCity").value.trim(),
+        shippingPhone: document.getElementById("shippingPhone").value.trim(),
+        items: Object.entries(state.cart).map(([id, quantity]) => ({
+            productId: id,
+            quantity
+        })),
+        subtotal: getCartSubtotal()
+    };
+
+    console.log("DEMO ORDER PREVIEW — NOT A REAL ORDER", orderPreview);
+
+    closeModal("checkoutModal");
+
+    alert(
+        "Demo checkout completed.\\n\\n" +
+        "No ORIX tokens were transferred and no real order was created.\\n\\n" +
+        "Connect the checkout to your secure backend to enable real purchases."
+    );
+});
+
+/* Seller application demonstration */
+
+document.getElementById("sellerBtn").addEventListener("click", () => {
+    openModal("sellerModal");
+});
+
+document.getElementById("sellerForm").addEventListener("submit", event => {
+    event.preventDefault();
+
+    const application = {
+        name: document.getElementById("sellerName").value.trim(),
+        email: document.getElementById("sellerEmail").value.trim(),
+        type: document.getElementById("sellerType").value
+    };
+
+    console.log("DEMO SELLER APPLICATION — NOT SAVED", application);
+
+    closeModal("sellerModal");
+    event.target.reset();
+
+    showToast("Demo only: seller application was not sent to a server.");
+});
+
+/* Modal closing */
+
+document.querySelectorAll("[data-close-modal]").forEach(button => {
+    button.addEventListener("click", () => {
+        closeModal(button.dataset.closeModal);
+    });
+});
+
+document.querySelectorAll(".modal-backdrop").forEach(backdrop => {
+    backdrop.addEventListener("click", event => {
+        if (event.target === backdrop) {
+            closeModal(backdrop.id);
         }
+    });
+});
 
-        window.addEventListener("scroll", updateNavbar, { passive: true });
-        updateNavbar();
+document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+        closeCart();
 
-        // Reveal elements as they enter the viewport
-        const revealElements = document.querySelectorAll(".reveal");
-
-        if ("IntersectionObserver" in window) {
-            const observer = new IntersectionObserver((entries, obs) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add("visible");
-                        obs.unobserve(entry.target);
-                    }
-                });
-            }, {
-                threshold: 0.12
-            });
-
-            revealElements.forEach(element => observer.observe(element));
-        } else {
-            revealElements.forEach(element => element.classList.add("visible"));
-        }
-
-        // Automatically update copyright year
-        document.getElementById("year").textContent = new Date().getFullYear();
-
-        // Prevent unconfigured placeholder links from navigating to the top.
-        // Replace these links with your official URLs before publishing.
-        document.querySelectorAll(".community-link").forEach(link => {
-            link.addEventListener("click", event => {
-                if (link.getAttribute("href") === "#") {
-                    event.preventDefault();
-                    alert("The official ORIX Network community link will be added soon.");
-                }
-            });
+        document.querySelectorAll(".modal-backdrop.open").forEach(modal => {
+            closeModal(modal.id);
         });
-    </script>
+
+        document.getElementById("navLinks").classList.remove("open");
+    }
+});
+
+/* Mobile navigation */
+
+document.getElementById("mobileMenu").addEventListener("click", () => {
+    document.getElementById("navLinks").classList.toggle("open");
+});
+
+/* Demo wallet display */
+
+elements.headerBalance.textContent = money(state.balance);
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+/* Initial render */
+
+renderProducts();
+renderCart();
+</script>
 
 </body>
 </html>
-```
