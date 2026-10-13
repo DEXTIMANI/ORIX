@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#080b18">
 <meta name="description" content="Shop digital and physical products with ORIX tokens on ORIX Market.">
 <title>ORIX Market | Shop With ORIX</title>
 
+<!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>    
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -739,16 +741,16 @@ footer {
     margin-top: 12px;
 }
 
-/* Modals */
+/* Modals - UPDATED TO FIX ANDROID WEBVIEW KEYBOARD SQUISH BUG */
 
 .modal-backdrop {
     position: fixed;
     inset: 0;
     z-index: 150;
-    padding: 20px;
+    padding: 40px 20px; /* Modified to prevent squish */
     background: rgba(0,0,0,.75);
     display: none;
-    align-items: center;
+    align-items: flex-start; /* Keeps it at the top when keyboard opens */
     justify-content: center;
     overflow-y: auto;
 }
@@ -759,8 +761,8 @@ footer {
 
 .modal {
     width: min(510px,100%);
-    max-height: 90dvh;
-    overflow-y: auto;
+    /* Removed max-height so it doesn't shrink on Android */
+    margin: auto; /* Centers it naturally */
     padding: 27px;
     border: 1px solid var(--border);
     background: #10162b;
@@ -884,7 +886,7 @@ footer {
     }
 
     .header-actions .wallet-balance {
-        display: none;
+        display: none; /* Hide balance on small screens, keep cart icon */
     }
 }
 
@@ -1057,12 +1059,19 @@ footer {
         </nav>
 
         <div class="header-actions">
-            <div class="wallet-balance">
-                ORIX Balance: <strong id="headerBalance">1,000 ORIX</strong>
+            <!-- Hidden by default until logged in -->
+            <div id="loggedInActions" style="display: none; align-items: center; gap: 12px;">
+                <div class="wallet-balance">
+                    ORIX Balance: <strong id="headerBalance">0 ORIX</strong>
+                </div>
+                <button class="btn btn-primary" id="openCart">
+                    🛒 Cart <span id="cartCount">0</span>
+                </button>
             </div>
 
-            <button class="btn btn-primary" id="openCart">
-                🛒 Cart <span id="cartCount">0</span>
+            <!-- Shown when logged out -->
+            <button class="btn btn-outline" id="signInBtn">
+                Sign In
             </button>
 
             <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">
@@ -1259,6 +1268,31 @@ footer {
     </div>
 </aside>
 
+<!-- Sign In Modal -->
+<div class="modal-backdrop" id="authModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+        <div class="modal-header">
+            <h2 id="authTitle">Sign In</h2>
+            <button class="close-btn" data-close-modal="authModal" aria-label="Close">×</button>
+        </div>
+        <p class="modal-description">Log in with your ORIX app account to spend your tokens.</p>
+        
+        <form id="authForm">
+            <div class="form-group">
+                <label for="authEmail">Email address</label>
+                <input id="authEmail" type="email" required autocomplete="email">
+            </div>
+            <div class="form-group">
+                <label for="authPassword">Password</label>
+                <input id="authPassword" type="password" required autocomplete="current-password">
+            </div>
+            <button class="btn btn-primary" type="submit" style="width: 100%;">
+                Log In
+            </button>
+        </form>
+    </div>
+</div>
+
 <!-- Checkout modal -->
 <div class="modal-backdrop" id="checkoutModal">
     <div class="modal" role="dialog" aria-modal="true"
@@ -1385,10 +1419,8 @@ footer {
 "use strict";
 
 /*
- * ORIX MARKET FRONTEND - FIREBASE INTEGRATION
+ * ORIX MARKET FRONTEND - FIREBASE INTEGRATION & AUTH
  */
-
-const DEMO_BALANCE = 1000; // Leave visual balance setup for now
 
 // -------------------------------------------------------------
 // IMPORTANT: Replace this object with your actual Firebase config!
@@ -1431,7 +1463,7 @@ const state = {
     search: "",
     sort: "featured",
     cart: {},
-    balance: DEMO_BALANCE
+    balance: 0 // Will update via Firebase Auth automatically
 };
 
 const money = amount =>
@@ -1589,6 +1621,12 @@ function renderProducts() {
 }
 
 function addToCart(id) {
+    if (!firebase.auth().currentUser) {
+        showToast("Please Sign In first to add items to cart.");
+        openModal("authModal");
+        return;
+    }
+
     const product = getProduct(id);
 
     if (!product) {
@@ -1763,7 +1801,73 @@ document.getElementById("closeCart").addEventListener("click", closeCart);
 document.getElementById("cartOverlay").addEventListener("click", closeCart);
 document.getElementById("continueShopping").addEventListener("click", closeCart);
 
-/* Live Firebase Checkout */
+/* =========================================================
+   Live Firebase Authentication & Balance Tracker
+   ========================================================= */
+
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        // User is signed in! Show cart and balance
+        document.getElementById("loggedInActions").style.display = "flex";
+        document.getElementById("signInBtn").style.display = "none";
+        
+        // Listen to their LIVE token balance from Firestore
+        db.collection("users").doc(user.uid).onSnapshot(doc => {
+            if (doc.exists) {
+                state.balance = doc.data().balance || 0;
+                elements.headerBalance.textContent = money(state.balance);
+            }
+        });
+    } else {
+        // User is signed out. Hide cart, show Sign In button
+        document.getElementById("loggedInActions").style.display = "none";
+        document.getElementById("signInBtn").style.display = "inline-flex";
+        state.balance = 0;
+        elements.headerBalance.textContent = money(0);
+    }
+});
+
+// Open Auth Modal
+document.getElementById("signInBtn").addEventListener("click", () => {
+    openModal("authModal");
+});
+
+// Process Login Form
+document.getElementById("authForm").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const email = document.getElementById("authEmail").value.trim();
+    const pass = document.getElementById("authPassword").value.trim();
+    
+    const submitBtn = event.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = "Verifying...";
+    submitBtn.disabled = true;
+
+    try {
+        await firebase.auth().signInWithEmailAndPassword(email, pass);
+        closeModal("authModal");
+        showToast("Signed in successfully!");
+        event.target.reset();
+    } catch (error) {
+        console.error("Login Error:", error);
+        showToast("Login failed. Check your email and password.");
+    } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    }
+});
+
+/* =========================================================
+   Live Firebase Checkout 
+   ========================================================= */
+
+document.getElementById("checkoutBtn").addEventListener("click", () => {
+    if (getCartCount() === 0) {
+        showToast("Add products to your cart first.");
+        return;
+    }
+    openModal("checkoutModal");
+});
 
 document.getElementById("checkoutForm").addEventListener("submit", async event => {
     event.preventDefault();
@@ -1771,6 +1875,11 @@ document.getElementById("checkoutForm").addEventListener("submit", async event =
     if (getCartCount() === 0) {
         showToast("Your cart is empty.");
         closeModal("checkoutModal");
+        return;
+    }
+    
+    if (!firebase.auth().currentUser) {
+        showToast("You must be logged in to order.");
         return;
     }
 
