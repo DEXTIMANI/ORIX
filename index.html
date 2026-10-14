@@ -4,12 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#080b18">
-    <meta name="description" content="Discover ORIX REVOLUTION  — a community-powered digital ecosystem built for the next generation of blockchain innovation.">
-    <title>ORIX REVOLUTION  | 360° OFF THE NORM</title>
+    <meta name="description" content="Discover ORIX REVOLUTION  — The ultimate mobile crypto earning ecosystem and integrated marketplace.">
+    <title>ORIX REVOLUTION | The Future of Free Earning</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Firebase SDKs (Compat versions) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>    
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics-compat.js"></script>
 
     <style>
         :root {
@@ -407,24 +413,9 @@
             box-shadow: 0 0 18px var(--primary);
         }
 
-        .orbit-dot.one {
-            top: 23%;
-            left: 19%;
-        }
-
-        .orbit-dot.two {
-            bottom: 20%;
-            right: 17%;
-            background: #9588ff;
-            box-shadow: 0 0 18px #9588ff;
-        }
-
-        .orbit-dot.three {
-            right: 14%;
-            top: 29%;
-            width: 6px;
-            height: 6px;
-        }
+        .orbit-dot.one { top: 23%; left: 19%; }
+        .orbit-dot.two { bottom: 20%; right: 17%; background: #9588ff; box-shadow: 0 0 18px #9588ff; }
+        .orbit-dot.three { right: 14%; top: 29%; width: 6px; height: 6px; }
 
         .core {
             width: 185px;
@@ -481,16 +472,8 @@
             animation: float 5s ease-in-out infinite;
         }
 
-        .floating-card.top {
-            top: 14%;
-            right: -2%;
-        }
-
-        .floating-card.bottom {
-            bottom: 14%;
-            left: -2%;
-            animation-delay: -2s;
-        }
+        .floating-card.top { top: 14%; right: -2%; }
+        .floating-card.bottom { bottom: 14%; left: -2%; animation-delay: -2s; }
 
         .float-icon {
             width: 37px;
@@ -509,9 +492,7 @@
             color: var(--muted);
         }
 
-        .floating-card strong {
-            font-size: 12px;
-        }
+        .floating-card strong { font-size: 12px; }
 
         @keyframes float {
             0%, 100% { transform: translateY(0); }
@@ -519,7 +500,6 @@
         }
 
         /* Trust strip */
-
         .trust-strip {
             border-top: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
@@ -541,6 +521,7 @@
             gap: 12px;
             color: #c5cee5;
             font-size: 12px;
+            font-weight: 600;
         }
 
         .trust-icon {
@@ -549,10 +530,7 @@
         }
 
         /* Ecosystem */
-
-        section {
-            padding: 110px 0;
-        }
+        section { padding: 110px 0; }
 
         .ecosystem {
             background: linear-gradient(180deg, transparent, rgba(15, 21, 43, 0.5), transparent);
@@ -593,9 +571,7 @@
             background: rgba(22, 31, 59, 0.9);
         }
 
-        .feature-card:hover::after {
-            transform: scale(1.5);
-        }
+        .feature-card:hover::after { transform: scale(1.5); }
 
         .feature-icon {
             width: 54px;
@@ -633,7 +609,6 @@
         }
 
         /* About */
-
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -749,7 +724,6 @@
         .node-four { bottom: 16%; right: 18%; }
 
         /* Tokenomics */
-
         .tokenomics {
             background: rgba(14, 19, 39, 0.6);
             border-top: 1px solid var(--border);
@@ -823,13 +797,8 @@
             border-bottom: 1px solid var(--border);
         }
 
-        .token-item:nth-child(3n) {
-            border-right: 0;
-        }
-
-        .token-item:nth-last-child(-n+3) {
-            border-bottom: 0;
-        }
+        .token-item:nth-child(3n) { border-right: 0; }
+        .token-item:nth-last-child(-n+3) { border-bottom: 0; }
 
         .token-item span {
             display: block;
@@ -852,7 +821,6 @@
         }
 
         /* Roadmap */
-
         .roadmap-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -886,6 +854,14 @@
             font-size: 12px;
             line-height: 1.9;
         }
+        
+        .roadmap-card ul {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.7;
+            margin-left: 16px;
+            margin-top: 8px;
+        }
 
         .roadmap-status {
             display: inline-block;
@@ -900,10 +876,7 @@
         }
 
         /* Community */
-
-        .community {
-            padding-top: 30px;
-        }
+        .community { padding-top: 30px; }
 
         .community-box {
             position: relative;
@@ -941,10 +914,7 @@
         }
 
         /* Footer */
-
-        footer {
-            padding: 60px 0 25px;
-        }
+        footer { padding: 60px 0 25px; }
 
         .footer-top {
             display: flex;
@@ -955,9 +925,7 @@
             border-bottom: 1px solid var(--border);
         }
 
-        .footer-brand {
-            max-width: 310px;
-        }
+        .footer-brand { max-width: 310px; }
 
         .footer-brand p {
             margin-top: 17px;
@@ -985,9 +953,7 @@
             transition: color 0.2s;
         }
 
-        .footer-column a:hover {
-            color: var(--primary);
-        }
+        .footer-column a:hover { color: var(--primary); }
 
         .footer-bottom {
             padding-top: 23px;
@@ -998,69 +964,34 @@
             font-size: 11px;
         }
 
-        .footer-bottom a {
-            color: #9ba8c5;
-        }
+        .footer-bottom a { color: #9ba8c5; }
 
         /* Reveal animations */
-
         .reveal {
             opacity: 0;
             transform: translateY(25px);
             transition: opacity 0.7s ease, transform 0.7s ease;
         }
-
         .reveal.visible {
             opacity: 1;
             transform: translateY(0);
         }
 
         /* Responsive */
-
         @media (max-width: 950px) {
-            .nav-links {
-                gap: 18px;
-            }
-
-            .nav-links a {
-                font-size: 12px;
-            }
-
-            .hero-grid {
-                grid-template-columns: 1fr 0.85fr;
-                gap: 10px;
-            }
-
-            .hero h1 {
-                font-size: 54px;
-            }
-
-            .floating-card.top {
-                right: 0;
-            }
-
-            .floating-card.bottom {
-                left: 0;
-            }
-
-            .about-grid {
-                gap: 35px;
-            }
-
-            .roadmap-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .nav-links { gap: 18px; }
+            .nav-links a { font-size: 12px; }
+            .hero-grid { grid-template-columns: 1fr 0.85fr; gap: 10px; }
+            .hero h1 { font-size: 54px; }
+            .floating-card.top { right: 0; }
+            .floating-card.bottom { left: 0; }
+            .about-grid { gap: 35px; }
+            .roadmap-grid { grid-template-columns: repeat(2, 1fr); }
         }
 
         @media (max-width: 760px) {
-            .navbar {
-                padding: 15px 0;
-            }
-
-            .menu-toggle {
-                display: block;
-            }
-
+            .navbar { padding: 15px 0; }
+            .menu-toggle { display: block; }
             .nav-links {
                 position: absolute;
                 top: 100%;
@@ -1074,186 +1005,48 @@
                 background: rgba(8, 11, 24, 0.98);
                 border-bottom: 1px solid var(--border);
             }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .nav-links li a {
-                display: block;
-                padding: 13px 0;
-                font-size: 14px;
-            }
-
-            .nav-links .nav-cta {
-                margin-top: 10px;
-                text-align: center;
-            }
-
-            .hero {
-                padding-top: 130px;
-                min-height: auto;
-            }
-
-            .hero-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-content {
-                text-align: center;
-            }
-
-            .hero-description {
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .hero-buttons,
-            .hero-note {
-                justify-content: center;
-            }
-
-            .hero h1 {
-                font-size: clamp(45px, 10vw, 65px);
-                letter-spacing: -2px;
-            }
-
-            .hero-visual {
-                min-height: 390px;
-                margin-top: 15px;
-            }
-
-            .orbital-scene {
-                max-width: 390px;
-            }
-
-            .core {
-                width: 150px;
-                height: 150px;
-            }
-
-            .core-mark {
-                font-size: 75px;
-            }
-
-            .floating-card.top {
-                right: 0;
-                top: 10%;
-            }
-
-            .floating-card.bottom {
-                left: 0;
-                bottom: 8%;
-            }
-
-            .trust-grid {
-                grid-template-columns: 1fr;
-                gap: 22px;
-            }
-
-            section {
-                padding: 80px 0;
-            }
-
-            .ecosystem-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .feature-card {
-                min-height: auto;
-            }
-
-            .about-grid {
-                grid-template-columns: 1fr;
-                gap: 35px;
-            }
-
-            .about-visual {
-                min-height: 350px;
-                order: -1;
-            }
-
-            .token-panel-top {
-                padding: 25px;
-                flex-wrap: wrap;
-            }
-
-            .token-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .token-item {
-                padding: 24px;
-                border-right: 1px solid var(--border) !important;
-                border-bottom: 1px solid var(--border) !important;
-            }
-
-            .token-item:nth-child(2n) {
-                border-right: 0 !important;
-            }
-
-            .token-item:nth-last-child(-n+2) {
-                border-bottom: 0 !important;
-            }
-
-            .roadmap-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .community-box {
-                padding: 55px 22px;
-            }
-
-            .footer-top {
-                flex-direction: column;
-                gap: 35px;
-            }
-
-            .footer-links {
-                gap: 30px;
-                justify-content: space-between;
-                width: 100%;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-            }
+            .nav-links.active { display: flex; }
+            .nav-links li a { display: block; padding: 13px 0; font-size: 14px; }
+            .nav-links .nav-cta { margin-top: 10px; text-align: center; }
+            .hero { padding-top: 130px; min-height: auto; }
+            .hero-grid { grid-template-columns: 1fr; }
+            .hero-content { text-align: center; }
+            .hero-description { margin-left: auto; margin-right: auto; }
+            .hero-buttons, .hero-note { justify-content: center; }
+            .hero h1 { font-size: clamp(45px, 10vw, 65px); letter-spacing: -2px; }
+            .hero-visual { min-height: 390px; margin-top: 15px; }
+            .orbital-scene { max-width: 390px; }
+            .core { width: 150px; height: 150px; }
+            .core-mark img { width: 65px !important; }
+            .floating-card.top { right: 0; top: 10%; }
+            .floating-card.bottom { left: 0; bottom: 8%; }
+            .trust-grid { grid-template-columns: 1fr; gap: 22px; }
+            section { padding: 80px 0; }
+            .ecosystem-grid { grid-template-columns: 1fr; }
+            .feature-card { min-height: auto; }
+            .about-grid { grid-template-columns: 1fr; gap: 35px; }
+            .about-visual { min-height: 350px; order: -1; }
+            .token-panel-top { padding: 25px; flex-wrap: wrap; }
+            .token-grid { grid-template-columns: repeat(2, 1fr); }
+            .token-item { padding: 24px; border-right: 1px solid var(--border) !important; border-bottom: 1px solid var(--border) !important; }
+            .token-item:nth-child(2n) { border-right: 0 !important; }
+            .token-item:nth-last-child(-n+2) { border-bottom: 0 !important; }
+            .roadmap-grid { grid-template-columns: 1fr; }
+            .community-box { padding: 55px 22px; }
+            .footer-top { flex-direction: column; gap: 35px; }
+            .footer-links { gap: 30px; justify-content: space-between; width: 100%; }
+            .footer-bottom { flex-direction: column; }
         }
 
         @media (max-width: 400px) {
-            .logo {
-                font-size: 19px;
-            }
-
-            .logo-symbol {
-                width: 34px;
-                height: 34px;
-            }
-
-            .hero-buttons .btn {
-                width: 100%;
-            }
-
-            .floating-card {
-                padding: 10px;
-            }
-
-            .floating-card strong {
-                font-size: 10px;
-            }
-
-            .token-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .token-item {
-                border-right: 0 !important;
-                border-bottom: 1px solid var(--border) !important;
-            }
-
-            .token-item:last-child {
-                border-bottom: 0 !important;
-            }
+            .logo { font-size: 19px; }
+            .logo-symbol { width: 34px; height: 34px; }
+            .hero-buttons .btn { width: 100%; }
+            .floating-card { padding: 10px; }
+            .floating-card strong { font-size: 10px; }
+            .token-grid { grid-template-columns: 1fr; }
+            .token-item { border-right: 0 !important; border-bottom: 1px solid var(--border) !important; }
+            .token-item:last-child { border-bottom: 0 !important; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -1263,11 +1056,7 @@
                 animation-iteration-count: 1 !important;
                 transition-duration: 0.01ms !important;
             }
-
-            .reveal {
-                opacity: 1;
-                transform: none;
-            }
+            .reveal { opacity: 1; transform: none; }
         }
     </style>
 </head>
@@ -1279,7 +1068,9 @@
         <div class="container nav-inner">
 
             <a href="#home" class="logo" aria-label="ORIX Home">
-                <span class="logo-symbol">O</span>
+                <span class="logo-symbol">
+                    <img src="orix_logo.png" alt="Orix" style="width: 22px; height: auto; object-fit: contain;">
+                </span>
                 <span>ORIX<span class="gradient-text"> R3VOLUTION</span></span>
             </a>
 
@@ -1298,7 +1089,7 @@
                 <li><a href="#roadmap">Roadmap</a></li>
                 <li>
                     <a href="#community" class="btn btn-primary nav-cta">
-                        Join ORIX ↗
+                        Start Earning ↗
                     </a>
                 </li>
             </ul>
@@ -1316,28 +1107,30 @@
 
                     <div class="status-badge">
                         <span class="status-dot"></span>
-                        A NEW DIGITAL ERA
+                        LIVE ON ANDROID
                     </div>
 
                     <h1>
-                        <span class="line">360 DEGREES</span>
-                        <span class="line">NEXT <span class="gradient-text">OFF THE</span></span>
-                        <span class="line gradient-text">NORM.</span>
+                        <span class="line">THE FUTURE OF</span>
+                        <span class="line">FREE <span class="gradient-text">CRYPTO</span></span>
+                        <span class="line gradient-text">EARNING.</span>
                     </h1>
 
                     <p class="hero-description">
-                        Welcome to ORIX R3VOLUTION— a community-powered digital
-                        ecosystem designed to connect people, digital assets,
-                        and opportunities in a more accessible digital economy.
+                        Welcome to ORIX R3VOLUTION— the ultimate crypto earning ecosystem. 
+                        Mine tokens directly from your phone, complete daily tasks, and spend 
+                        your rewards on real products in our integrated Web Market.
                     </p>
 
                     <div class="hero-buttons">
-                        <a href="#ecosystem" class="btn btn-primary">
-                            Explore ORIX <span>→</span>
+                        <!-- Link to your marketplace -->
+                        <a href="market.html" class="btn btn-primary">
+                            Shop on MarketPlug <span>→</span>
                         </a>
 
+                        <!-- Link to your app download -->
                         <a href="#about" class="btn btn-outline">
-                            Discover Our Vision ↗
+                            Download the App ↗
                         </a>
                     </div>
 
@@ -1349,47 +1142,43 @@
                             <span class="avatar"></span>
                         </div>
 
-                        <span>Built around community. Designed for possibility.</span>
+                        <span>Join thousands of active miners earning daily.</span>
                     </div>
 
                 </div>
 
                 <div class="hero-visual" aria-label="ORIX digital illustration">
-
                     <div class="orbital-scene">
-
                         <div class="orbital-glow"></div>
-
                         <div class="orbit"></div>
                         <div class="orbit two"></div>
                         <div class="orbit three"></div>
-
                         <span class="orbit-dot one"></span>
                         <span class="orbit-dot two"></span>
                         <span class="orbit-dot three"></span>
 
                         <div class="core">
-                            <span class="core-mark">O</span>
+                            <span class="core-mark">
+                                <img src="orix_logo.png" alt="ORIX Logo" style="width: 85px; height: auto; object-fit: contain; filter: drop-shadow(0 0 15px rgba(56,232,255,.5));">
+                            </span>
                         </div>
 
                         <div class="floating-card top">
                             <div class="float-icon">◇</div>
                             <div>
-                                <small>THE ECOSYSTEM</small>
-                                <strong>Connected by ORIX</strong>
+                                <small>MOBILE MINING</small>
+                                <strong>Earn with Zero Hardware</strong>
                             </div>
                         </div>
 
                         <div class="floating-card bottom">
                             <div class="float-icon">⌘</div>
                             <div>
-                                <small>THE VISION</small>
-                                <strong>One Network. More Possibilities.</strong>
+                                <small>REAL UTILITY</small>
+                                <strong>Spend on MarketPlug</strong>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
 
             </div>
@@ -1401,17 +1190,17 @@
 
                 <div class="trust-item">
                     <span class="trust-icon">◈</span>
-                    <span>COMMUNITY-POWERED INNOVATION</span>
+                    <span>FREE MOBILE MINING</span>
                 </div>
 
                 <div class="trust-item">
                     <span class="trust-icon">⌘</span>
-                    <span>CONNECTED DIGITAL EXPERIENCES</span>
+                    <span>REAL-WORLD MARKETPLACE</span>
                 </div>
 
                 <div class="trust-item">
                     <span class="trust-icon">✧</span>
-                    <span>BUILT FOR THE FUTURE</span>
+                    <span>INSTANT USDT WITHDRAWALS</span>
                 </div>
 
             </div>
@@ -1426,12 +1215,12 @@
 
                     <h2 class="section-heading">
                         More Than a Token.<br>
-                        <span class="gradient-text">A Connected Experience.</span>
+                        <span class="gradient-text">A Complete Economy.</span>
                     </h2>
 
                     <p class="section-description">
-                        ORIX brings together digital participation, wallet
-                        experiences, and community-driven growth under one vision.
+                        ORIX is built differently. We combine mobile mining with immediate, 
+                        real-world utility through an integrated e-commerce platform.
                     </p>
                 </div>
 
@@ -1439,50 +1228,32 @@
 
                     <article class="feature-card reveal">
                         <div class="feature-icon">◈</div>
-
                         <h3>Mining & Rewards</h3>
-
                         <p>
-                            Explore participation-based reward experiences
-                            designed to encourage engagement and long-term
-                            involvement in the ORIX community.
+                            Simulate crypto mining directly from your Android device. Build your daily streak, 
+                            use mining boosts, and generate ORIX tokens effortlessly.
                         </p>
-
-                        <a href="#community" class="feature-link">
-                            Explore possibilities <span>→</span>
-                        </a>
+                        <a href="#about" class="feature-link">Start Mining <span>→</span></a>
                     </article>
 
                     <article class="feature-card reveal">
                         <div class="feature-icon">▣</div>
-
-                        <h3>Digital Wallet</h3>
-
+                        <h3>The MarketPlug</h3>
                         <p>
-                            A vision for a convenient digital asset experience
-                            where users can access their ORIX account and manage
-                            supported assets through a connected platform.
+                            Don't just hold tokens—spend them. Use your mined ORIX to purchase digital assets 
+                            and physical goods directly from our live Web Marketplace.
                         </p>
-
-                        <a href="#about" class="feature-link">
-                            Discover the vision <span>→</span>
-                        </a>
+                        <a href="market.html" class="feature-link">Browse Products <span>→</span></a>
                     </article>
 
                     <article class="feature-card reveal">
                         <div class="feature-icon">⌘</div>
-
-                        <h3>Community Revolutionary Network</h3>
-
+                        <h3>Tasks & Withdrawals</h3>
                         <p>
-                            Connect with other participants, share ideas,
-                            explore new opportunities, and help shape the
-                            future direction of the ORIX ecosystem.
+                            Complete sponsored tasks, spin the fortune wheel, and refer friends to multiply your earnings. 
+                            Convert eligible ORIX balances directly to USDT.
                         </p>
-
-                        <a href="#community" class="feature-link">
-                            Meet the community <span>→</span>
-                        </a>
+                        <a href="#community" class="feature-link">Learn How to Earn <span>→</span></a>
                     </article>
 
                 </div>
@@ -1494,33 +1265,26 @@
             <div class="container about-grid">
 
                 <div class="about-copy reveal">
-
                     <span class="section-label">WHY ORIX</span>
-
                     <h2 class="section-heading">
-                        The Future Is<br>
-                        <span class="gradient-text">Built Together.</span>
+                        The Future of<br>
+                        <span class="gradient-text">Free Crypto.</span>
                     </h2>
-
                     <p>
-                        We believe the next generation of digital networks
-                        should be accessible, useful, and shaped by the people
-                        who participate in them.
+                        We believe that crypto earning should be accessible to everyone, without requiring 
+                        expensive hardware or upfront investments.
                     </p>
-
                     <p>
-                        ORIX REVOLUTION aims to bring that belief to life through
-                        an evolving ecosystem focused on digital participation,
-                        practical tools, and community growth.
+                        ORIX REVOLUTION bridges the gap between digital earning and real-world spending. 
+                        It isn't just another coin waiting for a mainnet—it is a fully functional digital economy.
                     </p>
 
                     <div class="about-points">
-
                         <div class="about-point">
                             <span class="check">✓</span>
                             <div>
                                 <strong>Accessibility First</strong>
-                                <span>Building digital experiences with everyday users in mind.</span>
+                                <span>Mine directly from your Android device with zero battery drain.</span>
                             </div>
                         </div>
 
@@ -1528,37 +1292,31 @@
                             <span class="check">✓</span>
                             <div>
                                 <strong>Community at the Core</strong>
-                                <span>Creating room for participation, feedback, and shared progress.</span>
+                                <span>Earn more through referrals, fortune spins, and daily network tasks.</span>
                             </div>
                         </div>
 
                         <div class="about-point">
                             <span class="check">✓</span>
                             <div>
-                                <strong>Growth Through Innovation</strong>
-                                <span>Exploring practical applications for a connected digital ecosystem.</span>
+                                <strong>Growth Through Utility</strong>
+                                <span>Backed by MarketPlug, an active marketplace where your tokens hold purchasing power today.</span>
                             </div>
                         </div>
-
                     </div>
 
-                    <a href="#roadmap" class="btn btn-primary">
-                        Explore Our Roadmap →
-                    </a>
-
+                    <a href="#roadmap" class="btn btn-primary">Explore Our Roadmap →</a>
                 </div>
 
                 <div class="about-visual reveal">
-
                     <div class="network-lines"></div>
-
                     <div class="network-node node-one">◇</div>
                     <div class="network-node node-two">⌘</div>
                     <div class="network-node node-three">▣</div>
                     <div class="network-node node-four">✧</div>
-
-                    <div class="network-center">O</div>
-
+                    <div class="network-center">
+                        <img src="orix_logo.png" alt="Orix Logo" style="width: 50px; height: auto; object-fit: contain;">
+                    </div>
                 </div>
 
             </div>
@@ -1570,36 +1328,29 @@
 
                 <div class="section-header reveal">
                     <span class="section-label">THE ORIX TOKEN</span>
-
                     <h2 class="section-heading">
                         Understanding <span class="gradient-text">ORIX.</span>
                     </h2>
-
                     <p class="section-description">
-                        A look at the intended role of the ORIX token within
-                        its evolving digital ecosystem.
+                        The fuel powering the ORIX R3VOLUTION ecosystem and the native currency of the MarketPlug.
                     </p>
                 </div>
 
                 <div class="token-panel reveal">
-
                     <div class="token-panel-top">
-
                         <div class="token-identity">
-                            <div class="token-logo">O</div>
-
+                            <div class="token-logo">
+                                <img src="orix_logo.png" alt="Orix" style="width: 32px; height: auto; object-fit: contain;">
+                            </div>
                             <div>
                                 <h3>ORIX Token</h3>
                                 <p>ORIX REVOLUTION Digital Asset</p>
                             </div>
                         </div>
-
                         <span class="token-tag">TOKEN OVERVIEW</span>
-
                     </div>
 
                     <div class="token-grid">
-
                         <div class="token-item">
                             <span>Token Name</span>
                             <strong>ORIX</strong>
@@ -1607,7 +1358,7 @@
 
                         <div class="token-item">
                             <span>Token Symbol</span>
-                            <strong>ORIX</strong>
+                            <strong>ORX</strong>
                         </div>
 
                         <div class="token-item">
@@ -1617,27 +1368,24 @@
 
                         <div class="token-item">
                             <span>Total Supply</span>
-                            <strong>To Be Announced</strong>
+                            <strong>Based on Mining Output</strong>
                         </div>
 
                         <div class="token-item">
-                            <span>Blockchain Network</span>
-                            <strong>To Be Confirmed</strong>
+                            <span>Platform</span>
+                            <strong>Mobile App / Web Market</strong>
                         </div>
 
                         <div class="token-item">
-                            <span>Token Utility</span>
-                            <strong>Ecosystem Participation</strong>
+                            <span>Core Utility</span>
+                            <strong>Marketplace Purchases & USDT Conversion</strong>
                         </div>
-
                     </div>
-
                 </div>
 
                 <p class="token-disclaimer">
-                    Token specifications are placeholders pending official
-                    confirmation. This website does not represent an official
-                    token launch announcement, price quotation, or investment offer.
+                    ORIX is currently a utility token native to the ORIX Android App and MarketPlug. 
+                    Mainnet blockchain deployment dates and token generation events (TGE) will be officially announced in the future.
                 </p>
 
             </div>
@@ -1649,14 +1397,11 @@
 
                 <div class="section-header reveal">
                     <span class="section-label">THE ROADMAP</span>
-
                     <h2 class="section-heading">
                         Building the <span class="gradient-text">ORIX Future.</span>
                     </h2>
-
                     <p class="section-description">
-                        A proposed development framework for the ORIX REVOLUTION
-                        ecosystem. Milestones and dates will be confirmed officially.
+                        Our transparent development framework. Watch as we expand from mobile mining into a full-scale digital economy.
                     </p>
                 </div>
 
@@ -1664,86 +1409,53 @@
 
                     <article class="roadmap-card reveal">
                         <div class="roadmap-number">01</div>
-
-                        <h3>Foundation</h3>
-
-                        <p>
-                            ORIX ROADMAP
-PHASE 1: FOUNDATION
-Establish the identity, technical infrastructure, and economic framework of the ORIX ecosystem, laying the groundwork for sustainable growth and future expansion.
-Key Objectives
-1. Network Identity
-Establish ORIX branding, vision, and mission.
-Develop the official website and communication channels.
-Define the ecosystem's core purpose and utility.
-2. Tokenomics
-Define token supply, allocation, and distribution.
-Establish token utility, rewards, and incentive mechanisms.
-Develop a sustainable economic model.
-3. Smart Contract Development
-Develop ORIX token and ecosystem smart contracts.
-Implement essential functionalities and security controls.
-Conduct testing and security reviews.
-4. Application Development
-Design and develop the ORIX application.
-Integrate wallet connectivity and smart contract functionality.
-Build the core user interface and ecosystem features.
-5. Game Development
-Design and develop ORIX ecosystem games.
-Implement gameplay mechanics, rewards, and progression systems.
-Integrate games with the ORIX ecosystem where applicable.
-6. Technical Infrastructure
-Define the network architecture and blockchain requirements.
-Establish development, testing, and deployment environments.
-Prepare technical documentation and security procedures.
-Foundation Milestone
-Establish the ORIX ecosystem framework, complete initial smart contract development, build the application prototype, and develop initial game prototypes in preparation for the next phase.ty, define tokenomics,
-                            document the technical architecture, and prepare
-                            the core project infrastructure.
-                        </p>
-
-                        <span class="roadmap-status">FOUNDATION PHASE</span>
+                        <h3>Foundation & Launch</h3>
+                        <p>Establish the identity and technical infrastructure of the ORIX ecosystem.</p>
+                        <ul>
+                            <li>Deploy Firebase backend architecture.</li>
+                            <li>Develop core mobile mining mechanics.</li>
+                            <li>Launch the ORIX Android Application.</li>
+                            <li>Implement referral & task systems.</li>
+                        </ul>
+                        <span class="roadmap-status">COMPLETED</span>
                     </article>
 
                     <article class="roadmap-card reveal">
                         <div class="roadmap-number">02</div>
-
-                        <h3>Ecosystem Development</h3>
-
-                        <p>
-                            Develop and refine essential user experiences,
-                            including account management, wallet functionality,
-                            and community participation features.
-                        </p>
-
-                        <span class="roadmap-status">PLANNED</span>
+                        <h3>Ecosystem Expansion</h3>
+                        <p>Give immediate utility to the token and establish real-world value.</p>
+                        <ul>
+                            <li>Launch the Web MarketPlug.</li>
+                            <li>Develop Admin Portal for product tracking.</li>
+                            <li>Enable direct ORIX-to-goods checkout.</li>
+                            <li>Process initial USDT withdrawal requests.</li>
+                        </ul>
+                        <span class="roadmap-status">IN PROGRESS</span>
                     </article>
 
                     <article class="roadmap-card reveal">
                         <div class="roadmap-number">03</div>
-
-                        <h3>Token & Integration</h3>
-
-                        <p>
-                            Finalize token specifications, assess deployment
-                            requirements, and conduct appropriate security
-                            reviews before any public release.
-                        </p>
-
+                        <h3>Network Growth</h3>
+                        <p>Scaling the ecosystem and introducing new avenues for earning.</p>
+                        <ul>
+                            <li>Expand sponsored tasks and airdrops.</li>
+                            <li>Introduce new games to the platform.</li>
+                            <li>Onboard third-party marketplace sellers.</li>
+                            <li>Scale active daily miner base.</li>
+                        </ul>
                         <span class="roadmap-status">PLANNED</span>
                     </article>
 
                     <article class="roadmap-card reveal">
                         <div class="roadmap-number">04</div>
-
-                        <h3>Expansion</h3>
-
-                        <p>
-                            Explore ecosystem partnerships, broaden community
-                            participation, and introduce additional utilities
-                            as the project matures.
-                        </p>
-
+                        <h3>Blockchain Mainnet</h3>
+                        <p>Transitioning from an internal economy to public blockchain integration.</p>
+                        <ul>
+                            <li>Finalize token smart contracts.</li>
+                            <li>Security audits and compliance reviews.</li>
+                            <li>Token Generation Event (TGE).</li>
+                            <li>Decentralized Exchange (DEX) listings.</li>
+                        </ul>
                         <span class="roadmap-status">FUTURE VISION</span>
                     </article>
 
@@ -1755,35 +1467,25 @@ Establish the ORIX ecosystem framework, complete initial smart contract developm
         <!-- Community -->
         <section class="community" id="community">
             <div class="container">
-
                 <div class="community-box reveal">
-
                     <span class="section-label">JOIN THE MOVEMENT</span>
-
                     <h2>
                         The Next Chapter<br>
                         <span class="gradient-text">Starts With You.</span>
                     </h2>
-
                     <p>
-                        Be part of the ORIX REVOLUTION journey. Follow the project's
-                        progress, discover upcoming developments, and help build
-                        a stronger digital community.
+                        Be part of the ORIX REVOLUTION journey. Download the app, start mining for free, 
+                        and join thousands of users participating in our growing digital economy.
                     </p>
-
                     <div class="community-buttons">
-                        <!-- Replace # with your official community URLs -->
                         <a href="#" class="btn btn-primary community-link">
-                            Join Our Community ↗
+                            Download the Android App ↗
                         </a>
-
                         <a href="#" class="btn btn-outline community-link">
-                            Follow ORIX Updates ↗
+                            Join Telegram Community ↗
                         </a>
                     </div>
-
                 </div>
-
             </div>
         </section>
 
@@ -1792,65 +1494,53 @@ Establish the ORIX ecosystem framework, complete initial smart contract developm
     <!-- Footer -->
     <footer>
         <div class="container">
-
             <div class="footer-top">
-
                 <div class="footer-brand">
-
                     <a href="#home" class="logo">
-                        <span class="logo-symbol">O</span>
+                        <span class="logo-symbol">
+                            <img src="orix_logo.png" alt="Orix Logo" style="width: 20px; height: auto; object-fit: contain;">
+                        </span>
                         <span>ORIX<span class="gradient-text"> R3VOLUTION</span></span>
                     </a>
-
                     <p>
                         One network. Limitless possibilities.
-                        Exploring a more connected digital future through
-                        innovation, accessibility, and community.
+                        Exploring a more connected digital future through free earning, real-world utility, and community growth.
                     </p>
-
                 </div>
 
                 <div class="footer-links">
-
                     <div class="footer-column">
                         <h4>Explore</h4>
                         <a href="#home">Home</a>
-                        <a href="#ecosystem">Ecosystem</a>
+                        <a href="#ecosystem">The Ecosystem</a>
                         <a href="#about">About ORIX</a>
-                        <a href="#roadmap">Roadmap</a>
+                        <a href="market.html">MarketPlug</a>
                     </div>
 
                     <div class="footer-column">
                         <h4>Token</h4>
                         <a href="#tokenomics">Token Overview</a>
-                        <a href="#tokenomics">Tokenomics</a>
-                        <a href="#community">Token Updates</a>
+                        <a href="#roadmap">Development Roadmap</a>
+                        <a href="#community">App Download</a>
                     </div>
 
                     <div class="footer-column">
                         <h4>Community</h4>
                         <a href="#" class="community-link">Telegram</a>
-                        <a href="#" class="community-link">X / Twitter</a>
-                        <a href="#" class="community-link">Contact</a>
+                        <a href="#" class="community-link">Twitter / X</a>
+                        <a href="#" class="community-link">Contact Admin</a>
                     </div>
-
                 </div>
-
             </div>
 
             <div class="footer-bottom">
-
                 <span>
                     © <span id="year"></span> ORIX REVOLUTION. All rights reserved.
                 </span>
-
                 <span>
-                    Digital assets involve risk. Nothing on this website
-                    constitutes financial advice.
+                    Digital assets involve risk. Mining rates and token utility are subject to platform terms and conditions.
                 </span>
-
             </div>
-
         </div>
     </footer>
 
@@ -1861,13 +1551,8 @@ Establish the ORIX ecosystem framework, complete initial smart contract developm
 
         menuToggle.addEventListener("click", () => {
             const isOpen = navLinks.classList.toggle("active");
-
             menuToggle.setAttribute("aria-expanded", String(isOpen));
-            menuToggle.setAttribute(
-                "aria-label",
-                isOpen ? "Close navigation menu" : "Open navigation menu"
-            );
-
+            menuToggle.setAttribute("aria-label", isOpen ? "Close navigation menu" : "Open navigation menu");
             menuToggle.textContent = isOpen ? "✕" : "☰";
         });
 
@@ -1883,17 +1568,14 @@ Establish the ORIX ecosystem framework, complete initial smart contract developm
 
         // Navbar scroll effect
         const navbar = document.getElementById("navbar");
-
         function updateNavbar() {
             navbar.classList.toggle("scrolled", window.scrollY > 30);
         }
-
         window.addEventListener("scroll", updateNavbar, { passive: true });
         updateNavbar();
 
         // Reveal elements as they enter the viewport
         const revealElements = document.querySelectorAll(".reveal");
-
         if ("IntersectionObserver" in window) {
             const observer = new IntersectionObserver((entries, obs) => {
                 entries.forEach(entry => {
@@ -1902,9 +1584,7 @@ Establish the ORIX ecosystem framework, complete initial smart contract developm
                         obs.unobserve(entry.target);
                     }
                 });
-            }, {
-                threshold: 0.12
-            });
+            }, { threshold: 0.12 });
 
             revealElements.forEach(element => observer.observe(element));
         } else {
@@ -1914,13 +1594,12 @@ Establish the ORIX ecosystem framework, complete initial smart contract developm
         // Automatically update copyright year
         document.getElementById("year").textContent = new Date().getFullYear();
 
-        // Prevent unconfigured placeholder links from navigating to the top.
-        // Replace these links with your official URLs before publishing.
+        // Placeholder link handler
         document.querySelectorAll(".community-link").forEach(link => {
             link.addEventListener("click", event => {
                 if (link.getAttribute("href") === "#") {
                     event.preventDefault();
-                    alert("The official ORIX REVOLUTION community link will be added soon.");
+                    alert("Official App and Community links will be updated before launch.");
                 }
             });
         });
@@ -1928,4 +1607,3 @@ Establish the ORIX ecosystem framework, complete initial smart contract developm
 
 </body>
 </html>
-
