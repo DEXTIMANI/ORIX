@@ -11,6 +11,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>    
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-functions-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics-compat.js"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -259,6 +260,14 @@ h1,h2,h3 {
 
 .art-circle::after {
     transform: rotate(-35deg) scaleY(.5);
+}
+
+.art-logo {
+    font-size: 105px;
+    font-family: "Space Grotesk",sans-serif;
+    font-weight: 700;
+    color: var(--cyan);
+    text-shadow: 0 0 35px rgba(56,232,255,.6);
 }
 
 .art-label {
@@ -1725,6 +1734,7 @@ document.getElementById("authForm").addEventListener("submit", async (e) => {
     }
 });
 
+// CHECKOUT LOGIC WITH CLOUD FUNCTION INTEGRATION
 document.getElementById("checkoutBtn").addEventListener("click", () => {
     if (getCartCount() === 0) return showToast("Add products to your cart first.");
     openModal("checkoutModal");
@@ -1738,13 +1748,17 @@ document.getElementById("checkoutForm").addEventListener("submit", async e => {
     const orderData = {
         customerName: document.getElementById("customerName").value.trim(),
         customerEmail: document.getElementById("customerEmail").value.trim(),
-        shippingAddress: document.getElementById("shippingAddress").value.trim(),
-        shippingCity: document.getElementById("shippingCity").value.trim(),
-        shippingPhone: document.getElementById("shippingPhone").value.trim(),
-        items: Object.entries(state.cart).map(([id, q]) => ({ productId: id, quantity: q, productDetails: getProduct(id) })),
-        subtotal: getCartSubtotal(),
-        status: "pending",
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        shippingInfo: {
+            address: document.getElementById("shippingAddress").value.trim(),
+            city: document.getElementById("shippingCity").value.trim(),
+            phone: document.getElementById("shippingPhone").value.trim()
+        },
+        items: Object.entries(state.cart).map(([id, q]) => ({ 
+            productId: id, 
+            quantity: q, 
+            productDetails: getProduct(id) 
+        })),
+        subtotal: getCartSubtotal()
     };
 
     const submitBtn = e.target.querySelector('button[type="submit"]');
@@ -1753,15 +1767,24 @@ document.getElementById("checkoutForm").addEventListener("submit", async e => {
     submitBtn.disabled = true;
 
     try {
-        await db.collection("orders").add(orderData);
+        // SECURE CHECKOUT: Call the Cloud Function
+        const placeOrder = firebase.functions().httpsCallable("placeMarketOrder");
+        await placeOrder(orderData);
+        
         state.cart = {};
         renderCart();
         closeModal("checkoutModal");
         e.target.reset();
-        showToast("Order placed successfully! Admin will process your purchase.");
+        showToast("Order placed successfully! Funds have been deducted from your balance.");
     } catch (error) {
         console.error("Checkout failed", error);
-        showToast("Failed to place order. Please try again.");
+        
+        // Show specific error if they don't have enough money
+        if (error.message && error.message.includes("Insufficient ORIX balance")) {
+            showToast("Failed: You don't have enough ORIX for this purchase.");
+        } else {
+            showToast("Failed to place order. Please try again.");
+        }
     } finally {
         submitBtn.textContent = originalText;
         submitBtn.disabled = false;
