@@ -98,17 +98,6 @@ header {
     white-space: nowrap;
 }
 
-.logo-icon {
-    width: 39px;
-    height: 39px;
-    border: 2px solid var(--cyan);
-    color: var(--cyan);
-    display: grid;
-    place-items: center;
-    border-radius: 12px;
-    font-size: 24px;
-}
-
 .nav-links {
     display: flex;
     gap: 27px;
@@ -270,14 +259,6 @@ h1,h2,h3 {
 
 .art-circle::after {
     transform: rotate(-35deg) scaleY(.5);
-}
-
-.art-logo {
-    font-size: 105px;
-    font-family: "Space Grotesk",sans-serif;
-    font-weight: 700;
-    color: var(--cyan);
-    text-shadow: 0 0 35px rgba(56,232,255,.6);
 }
 
 .art-label {
@@ -1043,7 +1024,8 @@ footer {
 <header>
     <div class="container navbar">
         <a href="#" class="logo">
-            <span class="logo-icon">O</span>
+            <!-- Navbar Image Logo -->
+            <img src="orix_logo.png" alt="ORIX Logo" style="height: 39px; width: auto; max-width: 39px; object-fit: contain;">
             <span>ORIX <span class="gradient-text">MARKET</span></span>
         </a>
 
@@ -1108,7 +1090,8 @@ footer {
 
             <div class="market-art">
                 <div class="art-circle">
-                    <span class="art-logo">O</span>
+                    <!-- Hero Section Image Logo -->
+                    <img src="orix_logo.png" alt="ORIX Logo" style="width: 105px; height: 105px; object-fit: contain; filter: drop-shadow(0 0 15px rgba(56,232,255,.6));">
                 </div>
 
                 <div class="art-label one">
@@ -1407,12 +1390,9 @@ async function loadProductsFromFirebase() {
         renderProducts(); // Update the UI once loaded
     } catch (error) {
         console.error("Error loading products:", error);
-        showToast("Failed to load products from database.");
+        showToast("Failed to load products from database. Are you logged in?");
     }
 }
-
-// Call this on page load
-loadProductsFromFirebase();
 
 const state = {
     category: "All Products",
@@ -1422,16 +1402,11 @@ const state = {
     balance: 0 // Will update via Firebase Auth automatically
 };
 
-const money = amount =>
-    `${Number(amount).toLocaleString("en-US")} ORIX`;
+const money = amount => `${Number(amount).toLocaleString("en-US")} ORIX`;
 
 const escapeHTML = value =>
     String(value || "").replace(/[&<>"']/g, character => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
     })[character]);
 
 const elements = {
@@ -1454,9 +1429,7 @@ const elements = {
 function showToast(message) {
     elements.toast.textContent = message;
     elements.toast.classList.add("show");
-
     clearTimeout(showToast.timer);
-
     showToast.timer = setTimeout(() => {
         elements.toast.classList.remove("show");
     }, 3000);
@@ -1467,8 +1440,7 @@ function getProduct(id) {
 }
 
 function getCartCount() {
-    return Object.values(state.cart)
-        .reduce((total, quantity) => total + quantity, 0);
+    return Object.values(state.cart).reduce((total, quantity) => total + quantity, 0);
 }
 
 function getCartSubtotal() {
@@ -1500,9 +1472,7 @@ function renderProducts() {
             product.type || ""
         ].join(" ").toLowerCase();
 
-        const matchesSearch = searchText.includes(state.search);
-
-        return matchesCategory && matchesSearch;
+        return matchesCategory && searchText.includes(state.search);
     });
 
     if (state.sort === "low") {
@@ -1511,29 +1481,27 @@ function renderProducts() {
         filtered.sort((a, b) => (b.price || 0) - (a.price || 0));
     } else if (state.sort === "name") {
         filtered.sort((a, b) => (a.name || "").localeCompare(b.name || ""));
-    } else {
-        filtered.sort((a, b) => Number(b.featured || 0) - Number(a.featured || 0));
     }
 
     elements.count.textContent = filtered.length;
 
     if (!filtered.length) {
+        // Updated empty state based on auth status
+        const isAuth = firebase.auth().currentUser;
         elements.grid.innerHTML = `
             <div class="empty-state">
-                <h3>No products found</h3>
-                <p>Check back soon for new inventory.</p>
+                <h3>${isAuth ? "No products found" : "Authentication Required"}</h3>
+                <p>${isAuth ? "Check back soon for new inventory." : "Please log in to view the marketplace."}</p>
+                ${!isAuth ? `<button class="btn btn-primary" onclick="openModal('authModal')" style="margin-top: 15px;">Log In Now</button>` : ''}
             </div>`;
         return;
     }
 
     elements.grid.innerHTML = filtered.map(product => {
         const isImage = Boolean(product.imageUrl);
-        
         const displayEmoji = product.emoji || "📦";
-
         const visual = isImage
-            ? `<img src="${escapeHTML(product.imageUrl)}"
-                    alt="${escapeHTML(product.name)}" loading="lazy">`
+            ? `<img src="${escapeHTML(product.imageUrl)}" alt="${escapeHTML(product.name)}" loading="lazy">`
             : `<span class="product-emoji" aria-hidden="true">${escapeHTML(displayEmoji)}</span>`;
 
         return `
@@ -1542,33 +1510,19 @@ function renderProducts() {
                     ${visual}
                     <span class="product-type">
                         ${product.type === "Digital Goods" || product.type === "digital" 
-                            ? "↓ Digital Delivery"
-                            : "□ Physical Product"}
+                            ? "↓ Digital Delivery" : "□ Physical Product"}
                     </span>
                 </div>
-
                 <div class="product-body">
-                    <div class="product-category">
-                        ${escapeHTML(product.category || product.type || "Product")}
-                    </div>
-
-                    <h3 class="product-name">
-                        ${escapeHTML(product.name)}
-                    </h3>
-
-                    <p class="product-description">
-                        ${escapeHTML(product.description)}
-                    </p>
-
+                    <div class="product-category">${escapeHTML(product.category || product.type || "Product")}</div>
+                    <h3 class="product-name">${escapeHTML(product.name)}</h3>
+                    <p class="product-description">${escapeHTML(product.description)}</p>
                     <div class="product-bottom">
                         <div class="product-price">
                             ${money(product.price)}
                             <small>Seller: ${escapeHTML(product.seller || "ORIX Official")}</small>
                         </div>
-
-                        <button class="add-btn" data-add="${escapeHTML(product.id)}">
-                            + Add
-                        </button>
+                        <button class="add-btn" data-add="${escapeHTML(product.id)}">+ Add</button>
                     </div>
                 </div>
             </article>`;
@@ -1581,31 +1535,19 @@ function addToCart(id) {
         openModal("authModal");
         return;
     }
-
     const product = getProduct(id);
-
-    if (!product) {
-        showToast("Product not found.");
-        return;
-    }
-
+    if (!product) return showToast("Product not found.");
+    
     state.cart[id] = (state.cart[id] || 0) + 1;
-
     renderCart();
     showToast(`${product.name} added to your cart.`);
 }
 
 function changeQuantity(id, change) {
     if (!state.cart[id]) return;
-
     const newQuantity = state.cart[id] + change;
-
-    if (newQuantity <= 0) {
-        delete state.cart[id];
-    } else {
-        state.cart[id] = newQuantity;
-    }
-
+    if (newQuantity <= 0) delete state.cart[id];
+    else state.cart[id] = newQuantity;
     renderCart();
 }
 
@@ -1624,10 +1566,7 @@ function renderCart() {
     elements.total.textContent = money(subtotal);
     elements.checkoutSubtotal.textContent = money(subtotal);
 
-    elements.shippingCost.textContent = cartHasPhysicalProducts()
-        ? "Calculated at checkout"
-        : "Not applicable";
-
+    elements.shippingCost.textContent = cartHasPhysicalProducts() ? "Calculated at checkout" : "Not applicable";
     elements.shippingFields.hidden = !cartHasPhysicalProducts();
 
     if (count === 0) {
@@ -1640,42 +1579,29 @@ function renderCart() {
         return;
     }
 
-    elements.cartItems.innerHTML = Object.entries(state.cart)
-        .map(([id, quantity]) => {
-            const product = getProduct(id);
+    elements.cartItems.innerHTML = Object.entries(state.cart).map(([id, quantity]) => {
+        const product = getProduct(id);
+        if (!product) return "";
+        const visual = product.imageUrl
+            ? `<img src="${escapeHTML(product.imageUrl)}" alt="${escapeHTML(product.name)}">`
+            : escapeHTML(product.emoji || "📦");
 
-            if (!product) return "";
-
-            const displayEmoji = product.emoji || "📦";
-            const visual = product.imageUrl
-                ? `<img src="${escapeHTML(product.imageUrl)}"
-                        alt="${escapeHTML(product.name)}">`
-                : escapeHTML(displayEmoji);
-
-            return `
-                <div class="cart-item">
-                    <div class="cart-item-icon">${visual}</div>
-
-                    <div>
-                        <h4>${escapeHTML(product.name)}</h4>
-                        <p>${money((product.price || 0) * quantity)}</p>
-
-                        <div class="quantity-controls">
-                            <button data-minus="${id}" aria-label="Decrease quantity">−</button>
-                            <span>${quantity}</span>
-                            <button data-plus="${id}" aria-label="Increase quantity">+</button>
-                        </div>
-
-                        <button class="remove-item" data-remove="${id}">
-                            Remove
-                        </button>
+        return `
+            <div class="cart-item">
+                <div class="cart-item-icon">${visual}</div>
+                <div>
+                    <h4>${escapeHTML(product.name)}</h4>
+                    <p>${money((product.price || 0) * quantity)}</p>
+                    <div class="quantity-controls">
+                        <button data-minus="${id}">−</button>
+                        <span>${quantity}</span>
+                        <button data-plus="${id}">+</button>
                     </div>
-
-                    <div style="font-size:10px;color:var(--muted)">
-                        ${escapeHTML(product.type)}
-                    </div>
-                </div>`;
-        }).join("");
+                    <button class="remove-item" data-remove="${id}">Remove</button>
+                </div>
+                <div style="font-size:10px;color:var(--muted)">${escapeHTML(product.type)}</div>
+            </div>`;
+    }).join("");
 }
 
 function openCart() {
@@ -1701,66 +1627,58 @@ function closeModal(id) {
     document.body.style.overflow = "";
 }
 
-/* Product event delegation */
-elements.grid.addEventListener("click", event => {
-    const button = event.target.closest("[data-add]");
-    if (button) {
-        addToCart(button.dataset.add);
-    }
+/* Event Listeners */
+elements.grid.addEventListener("click", e => {
+    const btn = e.target.closest("[data-add]");
+    if (btn) addToCart(btn.dataset.add);
 });
 
-/* Cart event delegation */
-elements.cartItems.addEventListener("click", event => {
-    const minus = event.target.closest("[data-minus]");
-    const plus = event.target.closest("[data-plus]");
-    const remove = event.target.closest("[data-remove]");
-
-    if (minus) changeQuantity(minus.dataset.minus, -1);
-    if (plus) changeQuantity(plus.dataset.plus, 1);
-    if (remove) removeFromCart(remove.dataset.remove);
+elements.cartItems.addEventListener("click", e => {
+    if (e.target.closest("[data-minus]")) changeQuantity(e.target.closest("[data-minus]").dataset.minus, -1);
+    if (e.target.closest("[data-plus]")) changeQuantity(e.target.closest("[data-plus]").dataset.plus, 1);
+    if (e.target.closest("[data-remove]")) removeFromCart(e.target.closest("[data-remove]").dataset.remove);
 });
 
-/* Search and filters */
-elements.search.addEventListener("input", event => {
-    state.search = event.target.value.trim().toLowerCase();
+elements.search.addEventListener("input", e => { state.search = e.target.value.trim().toLowerCase(); renderProducts(); });
+elements.sort.addEventListener("change", e => { state.sort = e.target.value; renderProducts(); });
+document.getElementById("categories").addEventListener("click", e => {
+    const btn = e.target.closest("[data-category]");
+    if (!btn) return;
+    state.category = btn.dataset.category;
+    document.querySelectorAll(".category-btn").forEach(item => item.classList.toggle("active", item === btn));
     renderProducts();
 });
 
-elements.sort.addEventListener("change", event => {
-    state.sort = event.target.value;
-    renderProducts();
-});
-
-document.getElementById("categories").addEventListener("click", event => {
-    const button = event.target.closest("[data-category]");
-    if (!button) return;
-
-    state.category = button.dataset.category;
-
-    document.querySelectorAll(".category-btn").forEach(item => {
-        item.classList.toggle("active", item === button);
-    });
-
-    renderProducts();
-});
-
-/* Cart controls */
 document.getElementById("openCart").addEventListener("click", openCart);
 document.getElementById("closeCart").addEventListener("click", closeCart);
 document.getElementById("cartOverlay").addEventListener("click", closeCart);
 document.getElementById("continueShopping").addEventListener("click", closeCart);
+document.getElementById("signInBtn").addEventListener("click", () => openModal("authModal"));
+document.getElementById("mobileMenu").addEventListener("click", () => document.getElementById("navLinks").classList.toggle("open"));
+
+document.querySelectorAll("[data-close-modal]").forEach(btn => btn.addEventListener("click", () => closeModal(btn.dataset.closeModal)));
+document.querySelectorAll(".modal-backdrop").forEach(bg => bg.addEventListener("click", e => { if (e.target === bg) closeModal(bg.id); }));
+document.addEventListener("keydown", e => {
+    if (e.key === "Escape") {
+        closeCart();
+        document.querySelectorAll(".modal-backdrop.open").forEach(modal => closeModal(modal.id));
+        document.getElementById("navLinks").classList.remove("open");
+    }
+});
 
 /* =========================================================
    Live Firebase Authentication & Balance Tracker
    ========================================================= */
-
 firebase.auth().onAuthStateChanged((user) => {
     if (user) {
-        // User is signed in! Show cart and balance
+        // USER IS LOGGED IN
         document.getElementById("loggedInActions").style.display = "flex";
         document.getElementById("signInBtn").style.display = "none";
         
-        // Listen to their LIVE token balance from Firestore
+        // 1. Fetch products NOW that we have authorization!
+        loadProductsFromFirebase();
+        
+        // 2. Fetch live balance
         db.collection("users").doc(user.uid).onSnapshot(doc => {
             if (doc.exists) {
                 state.balance = doc.data().balance || 0;
@@ -1768,27 +1686,28 @@ firebase.auth().onAuthStateChanged((user) => {
             }
         });
     } else {
-        // User is signed out. Hide cart, show Sign In button
+        // USER IS LOGGED OUT
         document.getElementById("loggedInActions").style.display = "none";
         document.getElementById("signInBtn").style.display = "inline-flex";
         state.balance = 0;
         elements.headerBalance.textContent = money(0);
+        
+        // 1. Clear products from screen to protect database
+        products = [];
+        renderProducts(); 
+        
+        // 2. Automatically prompt them to log in!
+        openModal("authModal");
     }
 });
 
-// Open Auth Modal
-document.getElementById("signInBtn").addEventListener("click", () => {
-    openModal("authModal");
-});
-
-// Process Login Form
-document.getElementById("authForm").addEventListener("submit", async (event) => {
-    event.preventDefault();
+document.getElementById("authForm").addEventListener("submit", async (e) => {
+    e.preventDefault();
     const email = document.getElementById("authEmail").value.trim();
     const pass = document.getElementById("authPassword").value.trim();
-    
-    const submitBtn = event.target.querySelector('button[type="submit"]');
+    const submitBtn = e.target.querySelector('button[type="submit"]');
     const originalText = submitBtn.textContent;
+    
     submitBtn.textContent = "Verifying...";
     submitBtn.disabled = true;
 
@@ -1796,7 +1715,7 @@ document.getElementById("authForm").addEventListener("submit", async (event) => 
         await firebase.auth().signInWithEmailAndPassword(email, pass);
         closeModal("authModal");
         showToast("Signed in successfully!");
-        event.target.reset();
+        e.target.reset();
     } catch (error) {
         console.error("Login Error:", error);
         showToast("Login failed. Check your email and password.");
@@ -1806,31 +1725,15 @@ document.getElementById("authForm").addEventListener("submit", async (event) => 
     }
 });
 
-/* =========================================================
-   Live Firebase Checkout 
-   ========================================================= */
-
 document.getElementById("checkoutBtn").addEventListener("click", () => {
-    if (getCartCount() === 0) {
-        showToast("Add products to your cart first.");
-        return;
-    }
+    if (getCartCount() === 0) return showToast("Add products to your cart first.");
     openModal("checkoutModal");
 });
 
-document.getElementById("checkoutForm").addEventListener("submit", async event => {
-    event.preventDefault();
-
-    if (getCartCount() === 0) {
-        showToast("Your cart is empty.");
-        closeModal("checkoutModal");
-        return;
-    }
-    
-    if (!firebase.auth().currentUser) {
-        showToast("You must be logged in to order.");
-        return;
-    }
+document.getElementById("checkoutForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    if (getCartCount() === 0) return showToast("Your cart is empty.");
+    if (!firebase.auth().currentUser) return showToast("You must be logged in to order.");
 
     const orderData = {
         customerName: document.getElementById("customerName").value.trim(),
@@ -1838,32 +1741,23 @@ document.getElementById("checkoutForm").addEventListener("submit", async event =
         shippingAddress: document.getElementById("shippingAddress").value.trim(),
         shippingCity: document.getElementById("shippingCity").value.trim(),
         shippingPhone: document.getElementById("shippingPhone").value.trim(),
-        items: Object.entries(state.cart).map(([id, quantity]) => ({
-            productId: id,
-            quantity: quantity,
-            productDetails: getProduct(id)
-        })),
+        items: Object.entries(state.cart).map(([id, q]) => ({ productId: id, quantity: q, productDetails: getProduct(id) })),
         subtotal: getCartSubtotal(),
         status: "pending",
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
     };
 
-    // Change button text to indicate loading
-    const submitBtn = event.target.querySelector('button[type="submit"]');
+    const submitBtn = e.target.querySelector('button[type="submit"]');
     const originalText = submitBtn.textContent;
     submitBtn.textContent = "Processing...";
     submitBtn.disabled = true;
 
     try {
-        // Save the real order to Firebase
         await db.collection("orders").add(orderData);
-        
-        // Clear cart
         state.cart = {};
         renderCart();
         closeModal("checkoutModal");
-        event.target.reset();
-        
+        e.target.reset();
         showToast("Order placed successfully! Admin will process your purchase.");
     } catch (error) {
         console.error("Checkout failed", error);
@@ -1874,33 +1768,24 @@ document.getElementById("checkoutForm").addEventListener("submit", async event =
     }
 });
 
-/* Live Firebase Seller Application */
-document.getElementById("sellerBtn").addEventListener("click", () => {
-    openModal("sellerModal");
-});
-
-document.getElementById("sellerForm").addEventListener("submit", async event => {
-    event.preventDefault();
-
-    const application = {
-        name: document.getElementById("sellerName").value.trim(),
-        email: document.getElementById("sellerEmail").value.trim(),
-        type: document.getElementById("sellerType").value,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        status: "pending"
-    };
-
-    const submitBtn = event.target.querySelector('button[type="submit"]');
+document.getElementById("sellerBtn").addEventListener("click", () => openModal("sellerModal"));
+document.getElementById("sellerForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    const submitBtn = e.target.querySelector('button[type="submit"]');
     const originalText = submitBtn.textContent;
     submitBtn.textContent = "Submitting...";
     submitBtn.disabled = true;
 
     try {
-        // Save application to Firebase
-        await db.collection("seller_applications").add(application);
-        
+        await db.collection("seller_applications").add({
+            name: document.getElementById("sellerName").value.trim(),
+            email: document.getElementById("sellerEmail").value.trim(),
+            type: document.getElementById("sellerType").value,
+            timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            status: "pending"
+        });
         closeModal("sellerModal");
-        event.target.reset();
+        e.target.reset();
         showToast("Application submitted successfully!");
     } catch(error) {
         console.error("Failed to submit seller app", error);
@@ -1911,45 +1796,9 @@ document.getElementById("sellerForm").addEventListener("submit", async event => 
     }
 });
 
-/* Modal closing */
-document.querySelectorAll("[data-close-modal]").forEach(button => {
-    button.addEventListener("click", () => {
-        closeModal(button.dataset.closeModal);
-    });
-});
-
-document.querySelectorAll(".modal-backdrop").forEach(backdrop => {
-    backdrop.addEventListener("click", event => {
-        if (event.target === backdrop) {
-            closeModal(backdrop.id);
-        }
-    });
-});
-
-document.addEventListener("keydown", event => {
-    if (event.key === "Escape") {
-        closeCart();
-
-        document.querySelectorAll(".modal-backdrop.open").forEach(modal => {
-            closeModal(modal.id);
-        });
-
-        document.getElementById("navLinks").classList.remove("open");
-    }
-});
-
-/* Mobile navigation */
-document.getElementById("mobileMenu").addEventListener("click", () => {
-    document.getElementById("navLinks").classList.toggle("open");
-});
-
-/* Demo wallet display */
 elements.headerBalance.textContent = money(state.balance);
-
 document.getElementById("year").textContent = new Date().getFullYear();
 
-/* Initial render (renders empty state until Firebase resolves) */
-renderProducts();
 renderCart();
 </script>
 
