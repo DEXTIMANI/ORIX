@@ -7,10 +7,11 @@
 <meta name="description" content="Shop digital and physical products with ORIX tokens on ORIX Market.">
 <title>ORIX Market | Shop With ORIX</title>
 
-<!-- Firebase SDKs -->
+<!-- Firebase SDKs (Compat versions to match your code structure) -->
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>    
+<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics-compat.js"></script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -582,7 +583,6 @@ footer {
 }
 
 /* Cart drawer */
-
 .overlay {
     position: fixed;
     inset: 0;
@@ -741,16 +741,15 @@ footer {
     margin-top: 12px;
 }
 
-/* Modals - UPDATED TO FIX ANDROID WEBVIEW KEYBOARD SQUISH BUG */
-
+/* Modals */
 .modal-backdrop {
     position: fixed;
     inset: 0;
     z-index: 150;
-    padding: 40px 20px; /* Modified to prevent squish */
+    padding: 40px 20px;
     background: rgba(0,0,0,.75);
     display: none;
-    align-items: flex-start; /* Keeps it at the top when keyboard opens */
+    align-items: flex-start;
     justify-content: center;
     overflow-y: auto;
 }
@@ -761,8 +760,7 @@ footer {
 
 .modal {
     width: min(510px,100%);
-    /* Removed max-height so it doesn't shrink on Android */
-    margin: auto; /* Centers it naturally */
+    margin: auto;
     padding: 27px;
     border: 1px solid var(--border);
     background: #10162b;
@@ -886,7 +884,7 @@ footer {
     }
 
     .header-actions .wallet-balance {
-        display: none; /* Hide balance on small screens, keep cart icon */
+        display: none;
     }
 }
 
@@ -1044,7 +1042,6 @@ footer {
 
 <header>
     <div class="container navbar">
-
         <a href="#" class="logo">
             <span class="logo-icon">O</span>
             <span>ORIX <span class="gradient-text">MARKET</span></span>
@@ -1059,7 +1056,6 @@ footer {
         </nav>
 
         <div class="header-actions">
-            <!-- Hidden by default until logged in -->
             <div id="loggedInActions" style="display: none; align-items: center; gap: 12px;">
                 <div class="wallet-balance">
                     ORIX Balance: <strong id="headerBalance">0 ORIX</strong>
@@ -1069,7 +1065,6 @@ footer {
                 </button>
             </div>
 
-            <!-- Shown when logged out -->
             <button class="btn btn-outline" id="signInBtn">
                 Sign In
             </button>
@@ -1078,7 +1073,6 @@ footer {
                 ☰
             </button>
         </div>
-
     </div>
 </header>
 
@@ -1086,9 +1080,7 @@ footer {
 
 <section class="hero" id="home">
     <div class="container">
-
         <div class="hero-grid">
-
             <div>
                 <div class="eyebrow">WELCOME TO ORIX MARKET</div>
 
@@ -1129,7 +1121,6 @@ footer {
                     Your marketplace.
                 </div>
             </div>
-
         </div>
 
         <div class="benefits">
@@ -1148,13 +1139,11 @@ footer {
                 Designed for token-powered checkout.
             </div>
         </div>
-
     </div>
 </section>
 
 <section class="market-section" id="products">
     <div class="container">
-
         <div class="section-heading">
             <div>
                 <div class="eyebrow">THE MARKETPLACE</div>
@@ -1184,13 +1173,13 @@ footer {
         </div>
 
         <div class="categories" id="categories">
-            <button class="category-btn active" data-category="all">All Products</button>
-            <button class="category-btn" data-category="digital" id="digital">Digital Goods</button>
-            <button class="category-btn" data-category="physical" id="physical">Physical Goods</button>
-            <button class="category-btn" data-category="ebooks">E-books</button>
-            <button class="category-btn" data-category="software">Software</button>
-            <button class="category-btn" data-category="fashion">Fashion</button>
-            <button class="category-btn" data-category="electronics">Electronics</button>
+            <button class="category-btn active" data-category="All Products">All Products</button>
+            <button class="category-btn" data-category="Digital Goods">Digital Goods</button>
+            <button class="category-btn" data-category="Physical Goods">Physical Goods</button>
+            <button class="category-btn" data-category="E-books">E-books</button>
+            <button class="category-btn" data-category="Software">Software</button>
+            <button class="category-btn" data-category="Fashion">Fashion</button>
+            <button class="category-btn" data-category="Electronics">Electronics</button>
         </div>
 
         <div class="products-grid" id="productsGrid"></div>
@@ -1209,7 +1198,6 @@ footer {
                 Become a Seller →
             </button>
         </div>
-
     </div>
 </section>
 
@@ -1225,46 +1213,35 @@ footer {
 <!-- Cart overlay -->
 <div class="overlay" id="cartOverlay"></div>
 
-<aside class="cart-drawer" id="cartDrawer"
-       role="dialog" aria-modal="true" aria-label="Shopping cart">
-
+<aside class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Shopping cart">
     <div class="drawer-header">
         <h2>Your Cart <span class="gradient-text" id="drawerCount">(0)</span></h2>
         <button class="close-btn" id="closeCart" aria-label="Close cart">×</button>
     </div>
-
     <div class="cart-items" id="cartItems"></div>
-
     <div class="drawer-footer">
-
         <div class="summary-line">
             <span>Items subtotal</span>
             <span id="cartSubtotal">0 ORIX</span>
         </div>
-
         <div class="summary-line">
             <span>Shipping</span>
             <span id="shippingCost">Calculated at checkout</span>
         </div>
-
         <div class="summary-line total">
             <span>Subtotal</span>
             <strong id="cartTotal">0 ORIX</strong>
         </div>
-
         <p class="notice">
             Final shipping charges, payment verification, and any applicable
             fees must be confirmed before an order is submitted.
         </p>
-
         <button class="btn btn-primary" id="checkoutBtn">
             Continue to Checkout →
         </button>
-
         <button class="btn btn-outline" id="continueShopping">
             Continue Shopping
         </button>
-
     </div>
 </aside>
 
@@ -1276,7 +1253,6 @@ footer {
             <button class="close-btn" data-close-modal="authModal" aria-label="Close">×</button>
         </div>
         <p class="modal-description">Log in with your ORIX app account to spend your tokens.</p>
-        
         <form id="authForm">
             <div class="form-group">
                 <label for="authEmail">Email address</label>
@@ -1295,106 +1271,65 @@ footer {
 
 <!-- Checkout modal -->
 <div class="modal-backdrop" id="checkoutModal">
-    <div class="modal" role="dialog" aria-modal="true"
-         aria-labelledby="checkoutTitle">
-
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
         <div class="modal-header">
             <h2 id="checkoutTitle">Checkout</h2>
-            <button class="close-btn" data-close-modal="checkoutModal"
-                    aria-label="Close checkout">×</button>
+            <button class="close-btn" data-close-modal="checkoutModal" aria-label="Close checkout">×</button>
         </div>
-
-        <p class="modal-description">
-            Review your order and provide the information needed for delivery.
-        </p>
-
+        <p class="modal-description">Review your order and provide the information needed for delivery.</p>
         <form id="checkoutForm">
-
             <div class="form-group">
                 <label for="customerName">Full name</label>
-                <input id="customerName" name="customerName"
-                       autocomplete="name" required maxlength="120">
+                <input id="customerName" name="customerName" autocomplete="name" required maxlength="120">
             </div>
-
             <div class="form-group">
                 <label for="customerEmail">Email address</label>
-                <input id="customerEmail" name="customerEmail" type="email"
-                       autocomplete="email" required maxlength="254">
+                <input id="customerEmail" name="customerEmail" type="email" autocomplete="email" required maxlength="254">
             </div>
-
             <div id="shippingFields" hidden>
-
                 <div class="form-group">
                     <label for="shippingAddress">Delivery address</label>
-                    <textarea id="shippingAddress" name="shippingAddress"
-                              autocomplete="street-address"
-                              maxlength="500"></textarea>
+                    <textarea id="shippingAddress" name="shippingAddress" autocomplete="street-address" maxlength="500"></textarea>
                 </div>
-
                 <div class="form-group">
                     <label for="shippingCity">City / Town</label>
-                    <input id="shippingCity" name="shippingCity"
-                           autocomplete="address-level2" maxlength="100">
+                    <input id="shippingCity" name="shippingCity" autocomplete="address-level2" maxlength="100">
                 </div>
-
                 <div class="form-group">
                     <label for="shippingPhone">Phone number</label>
-                    <input id="shippingPhone" name="shippingPhone"
-                           autocomplete="tel" maxlength="30">
+                    <input id="shippingPhone" name="shippingPhone" autocomplete="tel" maxlength="30">
                 </div>
-
             </div>
-
             <div class="checkout-total">
                 <div>
                     <span>Products subtotal</span>
                     <strong id="checkoutSubtotal">0 ORIX</strong>
                 </div>
-                <p class="notice">
-                    Physical product shipping charges are not included until
-                    the shipping rate is confirmed.
-                </p>
+                <p class="notice">Physical product shipping charges are not included until the shipping rate is confirmed.</p>
             </div>
-
-            <p class="notice">
-                Order details will be sent directly to the marketplace admin for processing and fulfillment.
-            </p>
-
-            <button class="btn btn-primary" type="submit">
-                Complete Order
-            </button>
-
+            <p class="notice">Order details will be sent directly to the marketplace admin for processing and fulfillment.</p>
+            <button class="btn btn-primary" type="submit">Complete Order</button>
         </form>
     </div>
 </div>
 
 <!-- Seller modal -->
 <div class="modal-backdrop" id="sellerModal">
-    <div class="modal" role="dialog" aria-modal="true"
-         aria-labelledby="sellerTitle">
-
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="sellerTitle">
         <div class="modal-header">
             <h2 id="sellerTitle">Become an ORIX Seller</h2>
-            <button class="close-btn" data-close-modal="sellerModal"
-                    aria-label="Close seller form">×</button>
+            <button class="close-btn" data-close-modal="sellerModal" aria-label="Close seller form">×</button>
         </div>
-
-        <p class="modal-description">
-            Register your interest in selling digital or physical products.
-        </p>
-
+        <p class="modal-description">Register your interest in selling digital or physical products.</p>
         <form id="sellerForm">
-
             <div class="form-group">
                 <label for="sellerName">Your name or business name</label>
                 <input id="sellerName" required maxlength="150">
             </div>
-
             <div class="form-group">
                 <label for="sellerEmail">Email address</label>
                 <input id="sellerEmail" type="email" required maxlength="254">
             </div>
-
             <div class="form-group">
                 <label for="sellerType">What do you want to sell?</label>
                 <select id="sellerType" required>
@@ -1404,11 +1339,7 @@ footer {
                     <option value="both">Both</option>
                 </select>
             </div>
-
-            <button class="btn btn-primary" type="submit">
-                Submit Application
-            </button>
-
+            <button class="btn btn-primary" type="submit">Submit Application</button>
         </form>
     </div>
 </div>
@@ -1422,20 +1353,22 @@ footer {
  * ORIX MARKET FRONTEND - FIREBASE INTEGRATION & AUTH
  */
 
-// -------------------------------------------------------------
-// IMPORTANT: Replace this object with your actual Firebase config!
-// -------------------------------------------------------------
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyBLq1Ok74RTFvgSjqO4lhFAFCNFRlp9WV4",
+    authDomain: "orix-cfb25.firebaseapp.com",
+    projectId: "orix-cfb25",
+    storageBucket: "orix-cfb25.firebasestorage.app",
+    messagingSenderId: "106781722616",
+    appId: "1:106781722616:web:60fc89d033f1949e40380d",
+    measurementId: "G-T7YPRR2H3W"
 };
-// -------------------------------------------------------------
 
+// Initialize Firebase App
 firebase.initializeApp(firebaseConfig);
+
+// Initialize Firebase Analytics
+const analytics = firebase.analytics();
+
 const db = firebase.firestore();
 
 let products = []; // Starts empty, fetches from database
@@ -1444,10 +1377,33 @@ let products = []; // Starts empty, fetches from database
 async function loadProductsFromFirebase() {
     try {
         const snapshot = await db.collection("products").get();
-        products = snapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-        }));
+        products = snapshot.docs.map(doc => {
+            const data = doc.data();
+            let categoryName = "All Products";
+            let cleanDesc = data.description || "";
+
+            // Unpack the hidden category we sent from the Kotlin app
+            if (cleanDesc.startsWith("Category: ")) {
+                const splitIndex = cleanDesc.indexOf("\n");
+                if (splitIndex !== -1) {
+                    categoryName = cleanDesc.substring(10, splitIndex).trim();
+                    cleanDesc = cleanDesc.substring(splitIndex + 1).trim();
+                } else {
+                    categoryName = cleanDesc.substring(10).trim();
+                    cleanDesc = "";
+                }
+            } else {
+                // Fallback for older products
+                categoryName = (data.type === 'digital') ? "Digital Goods" : "Physical Goods";
+            }
+
+            return {
+                id: doc.id,
+                ...data,
+                category: categoryName,
+                description: cleanDesc
+            };
+        });
         renderProducts(); // Update the UI once loaded
     } catch (error) {
         console.error("Error loading products:", error);
@@ -1459,7 +1415,7 @@ async function loadProductsFromFirebase() {
 loadProductsFromFirebase();
 
 const state = {
-    category: "all",
+    category: "All Products",
     search: "",
     sort: "featured",
     cart: {},
@@ -1532,7 +1488,7 @@ function cartHasPhysicalProducts() {
 function renderProducts() {
     let filtered = products.filter(product => {
         const matchesCategory =
-            state.category === "all" ||
+            state.category === "All Products" ||
             product.category === state.category ||
             product.type === state.category;
 
@@ -1573,7 +1529,6 @@ function renderProducts() {
     elements.grid.innerHTML = filtered.map(product => {
         const isImage = Boolean(product.imageUrl);
         
-        // Default to a package emoji if no visual is provided from backend
         const displayEmoji = product.emoji || "📦";
 
         const visual = isImage
@@ -1586,7 +1541,7 @@ function renderProducts() {
                 <div class="product-image">
                     ${visual}
                     <span class="product-type">
-                        ${product.type === "digital"
+                        ${product.type === "Digital Goods" || product.type === "digital" 
                             ? "↓ Digital Delivery"
                             : "□ Physical Product"}
                     </span>
@@ -1747,17 +1702,14 @@ function closeModal(id) {
 }
 
 /* Product event delegation */
-
 elements.grid.addEventListener("click", event => {
     const button = event.target.closest("[data-add]");
-
     if (button) {
         addToCart(button.dataset.add);
     }
 });
 
 /* Cart event delegation */
-
 elements.cartItems.addEventListener("click", event => {
     const minus = event.target.closest("[data-minus]");
     const plus = event.target.closest("[data-plus]");
@@ -1769,7 +1721,6 @@ elements.cartItems.addEventListener("click", event => {
 });
 
 /* Search and filters */
-
 elements.search.addEventListener("input", event => {
     state.search = event.target.value.trim().toLowerCase();
     renderProducts();
@@ -1782,7 +1733,6 @@ elements.sort.addEventListener("change", event => {
 
 document.getElementById("categories").addEventListener("click", event => {
     const button = event.target.closest("[data-category]");
-
     if (!button) return;
 
     state.category = button.dataset.category;
@@ -1795,7 +1745,6 @@ document.getElementById("categories").addEventListener("click", event => {
 });
 
 /* Cart controls */
-
 document.getElementById("openCart").addEventListener("click", openCart);
 document.getElementById("closeCart").addEventListener("click", closeCart);
 document.getElementById("cartOverlay").addEventListener("click", closeCart);
@@ -1926,7 +1875,6 @@ document.getElementById("checkoutForm").addEventListener("submit", async event =
 });
 
 /* Live Firebase Seller Application */
-
 document.getElementById("sellerBtn").addEventListener("click", () => {
     openModal("sellerModal");
 });
@@ -1964,7 +1912,6 @@ document.getElementById("sellerForm").addEventListener("submit", async event => 
 });
 
 /* Modal closing */
-
 document.querySelectorAll("[data-close-modal]").forEach(button => {
     button.addEventListener("click", () => {
         closeModal(button.dataset.closeModal);
@@ -1992,13 +1939,11 @@ document.addEventListener("keydown", event => {
 });
 
 /* Mobile navigation */
-
 document.getElementById("mobileMenu").addEventListener("click", () => {
     document.getElementById("navLinks").classList.toggle("open");
 });
 
 /* Demo wallet display */
-
 elements.headerBalance.textContent = money(state.balance);
 
 document.getElementById("year").textContent = new Date().getFullYear();
