@@ -1201,9 +1201,10 @@ Leave the `auth.onAuthStateChanged` block below it exactly as it is. Replace jus
             if (user) {
                 verifyInvestorAccess(user, false);
             } else {
-                if (unsubscribeUser) unsubscribeUser();
-                if (unsubscribeFinancials) unsubscribeFinancials();
-                if (unsubscribeHistory) unsubscribeHistory();
+                // THE FIX: Safely check if variables exist before calling them to prevent a ReferenceError crash
+                if (typeof unsubscribeUser !== 'undefined' && unsubscribeUser) unsubscribeUser();
+                if (typeof unsubscribeFinancials !== 'undefined' && unsubscribeFinancials) unsubscribeFinancials();
+                if (typeof unsubscribeHistory !== 'undefined' && unsubscribeHistory) unsubscribeHistory();
 
                 document.getElementById("publicLandingView").style.display = "block";
                 document.getElementById("investorDashboardView").style.display = "none";
@@ -1213,6 +1214,7 @@ Leave the `auth.onAuthStateChanged` block below it exactly as it is. Replace jus
             }
         });
 
+        
         // Handle Email/Password Login
         document.getElementById("investorLoginForm").addEventListener("submit", async (e) => {
             e.preventDefault();
