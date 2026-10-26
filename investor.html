@@ -1148,11 +1148,6 @@
                 });
         }
 
-        That is the exact section that needs to be updated. You should replace the `verifyInvestorAccess` function in that snippet with the updated version that queries the database by email rather than by UID.
-
-Leave the `auth.onAuthStateChanged` block below it exactly as it is. Replace just the `verifyInvestorAccess` function with this:
-
-
         // ==========================================
         // 4. AUTHENTICATION & INVESTOR ROLE CHECK
         // ==========================================
@@ -1176,8 +1171,8 @@ Leave the `auth.onAuthStateChanged` block below it exactly as it is. Replace jus
                             }, { merge: true });
                         }
                         cachedUserData = userData;
-                        closeModal();
-                        showToast("Investor verified! Loading your live dashboard...");
+                        if (typeof closeModal === "function") closeModal();
+                        if (typeof showToast === "function") showToast("Investor verified! Loading your live dashboard...");
                         
                         // Pass the correct Document ID to the listeners
                         startInvestorDashboardListeners(userDoc.id); 
@@ -1187,15 +1182,14 @@ Leave the `auth.onAuthStateChanged` block below it exactly as it is. Replace jus
 
                 // If the code reaches this point, they lack the role or the document is missing
                 await auth.signOut();
-                showToast("Access Denied: Your email is not registered as an ORIX Investor.");
+                if (typeof showToast === "function") showToast("Access Denied: Your email is not registered as an ORIX Investor.");
 
             } catch (error) {
                 console.error("Investor check error:", error);
                 await auth.signOut();
-                showToast("Error verifying status. Please check your internet connection.");
+                if (typeof showToast === "function") showToast("Error verifying status. Please check your internet connection.");
             }
         }
-
 
         auth.onAuthStateChanged((user) => {
             if (user) {
@@ -1213,7 +1207,6 @@ Leave the `auth.onAuthStateChanged` block below it exactly as it is. Replace jus
                 document.querySelectorAll(".public-nav-item").forEach(el => el.style.display = "block");
             }
         });
-
         
         // Handle Email/Password Login
         document.getElementById("investorLoginForm").addEventListener("submit", async (e) => {
