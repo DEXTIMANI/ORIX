@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Account | Orix Revolution</title>
+    <style>
+        body { background-color: #0B0F19; color: #ffffff; font-family: sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .container { background-color: #161B28; padding: 40px; border-radius: 16px; border: 1px solid rgba(56, 232, 255, 0.2); width: 100%; max-width: 450px; }
+        h2 { color: #38E8FF; text-align: center; margin-top: 0; }
+        p { font-size: 14px; color: #a0aabf; text-align: center; margin-bottom: 24px; }
+        label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 8px; color: #d1d5db; }
+        input, textarea { width: 100%; padding: 12px; background-color: #0B0F19; border: 1px solid #2d3748; border-radius: 8px; color: white; margin-bottom: 20px; box-sizing: border-box; }
+        input:focus, textarea:focus { outline: none; border-color: #38E8FF; }
+        button { width: 100%; background-color: #FF1744; color: white; border: none; padding: 14px; border-radius: 8px; font-weight: bold; font-size: 16px; cursor: pointer; }
+        button:hover { background-color: #D50000; }
+        .footer { text-align: center; margin-top: 20px; font-size: 11px; color: #6b7280; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Request Account Deletion</h2>
+    <p>Fill out this form to open your email app and send a deletion request to our support team.</p>
+
+    <label for="email">Registered Game Email</label>
+    <input type="email" id="email" placeholder="email@example.com" required>
+
+    <label for="reason">Reason for Deletion</label>
+    <textarea id="reason" rows="4" placeholder="Optional: Let us know why you're leaving..."></textarea>
+
+    <button onclick="prepareAndSendEmail()">Open Email App</button>
+    
+    <div class="footer">Orix Revolution • 360° Off The Norm</div>
+</div>
+
+<script>
+function prepareAndSendEmail() {
+    const email = document.getElementById('email').value.trim();
+    const reason = document.getElementById('reason').value.trim();
+
+    if (!email) {
+        alert("Please enter your registered game email address.");
+        return;
+    }
+
+    const recipient = "support@orixrevolution.site";
+    const subject = encodeURIComponent("App Account Deletion Request - Orix");
+    const body = encodeURIComponent(
+        "Please delete my Orix account and purge all simulated progress.\n\n" +
+        "Registered Email: " + email + "\n" +
+        "Reason: " + (reason ? reason : "No reason provided")
+    );
+
+    // This launches the default email client (Gmail, Apple Mail, Outlook, etc.)
+    window.location.href = "mailto:" + recipient + "?subject=" + subject + "&body=" + body;
+}
+</script>
+
+</body>
+</html>
